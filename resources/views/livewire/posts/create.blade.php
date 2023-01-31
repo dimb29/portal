@@ -4,7 +4,7 @@
         height:50px;
     }
     .select2-selection{
-        height:45px;
+        height: 145px;
         border: 1px solid #f8fafc;
         padding: 3px;
         box-shadow: 1px 1px 2px 1px #e2e8f0;
@@ -12,7 +12,7 @@
     .selection{
     }
 </style>
-<div class="fixed z-50 inset-0 overflow-y-auto ease-out duration-400">
+<div class="fixed mt-16 z-10 inset-0 overflow-y-auto ease-out duration-400">
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 
         <div class="fixed inset-0 transition-opacity">
@@ -29,9 +29,8 @@
                     <div class="">
                         <div class="mb-4">
                             <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title:</label>
-                                <x-jet-input ads="tags" wire:model="title" name="title" id="title" multiple 
+                            <input type="text" wire:model="mytitle" name="mytitle" id="mytitle" 
                                 class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
-                                </x-jet-input>
                         </div>
                         <div wire:ignore class="mb-4">
                             <label for="content" class="block text-gray-700 text-sm font-bold mb-2">Content:</label>
@@ -39,23 +38,14 @@
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="content" wire:model="content" x-data 
                                 x-init="
-                                ClassicEditor
-                                .create( $refs.editordescription)
-                                .then(function(editor){
-                                    
-                                    editor.model.document.on('change:data', () => {
-                                        @this.set('content', editor.getData())
-                                        
-                                    })
-                                    
-                                })
-                                .catch( error => {
-                                    console.error( error );
-                                } );" x-ref="editordescription">
-                            </textarea>
+                                    CKEDITOR.replace('content');
+                                    CKEDITOR.instances.content.on('change', function() {
+                                        $dispatch('input', this.getData());
+                                    });"></textarea>
                         </div>
 
                         <div class="mb-4">
+                            <div class="flex flex-row">
                             <div x-data="{ isUploading: false, progress: 0 }"
                                 x-on:livewire-upload-start="isUploading = true"
                                 x-on:livewire-upload-finish="isUploading = false"
@@ -80,7 +70,7 @@
                         <div class="flex flex-row">
                             <div class="w-1/2 mr-1 mb-4" x-data="{idloc:null,nameloc:null,open:false}">
                                 <label for="locinput" class="block text-gray-700 text-sm font-bold mb-2">Lokasi:</label>
-                                <div @click="open=true" class="shadow appearance-none w-full whitespace overflow-y-auto h-12 border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
+                                <div @click="open=true" class="shadow appearance-none w-full whitespace overflow-y-auto scrollbar scrollbar-gray h-12 border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
                                     <div wire:ignore>
                                         <div id="wrapper-box"class="flex flex-wrap max-w-xl">
                                             <!-- sad -->
@@ -124,7 +114,7 @@
                                     </div>
                                 </div>
                                 <div class="absolute w-96 bg-white rounded-b-lg shadow z-10 p-2 max-h-48 overflow-auto" x-show="open" x-on:click.away="open = false">
-                                    <input type="text" @keyup="$wire.locationSearch()" wire:model="inloc" id="inloc" name="inloc"
+                                    <input type="text" @keyup="$wire.locationSearch()" wire:model="inloc" id="inloc" name="inloc" placeholder="cari lokasi"
                                         class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 mb-2 rounded leading-tight focus:outline-none focus:shadow-outline">
                                     @error('location') <span class="text-red-500">{{ $message }}</span>@enderror
                                     @if($this->listloc)
@@ -158,12 +148,6 @@
                             Cancel
                         </button>
                     </span>
-                    <!-- <span class="flex rounded-md shadow-sm sm:w-auto">
-                        <button data-modal-toggle="modal-create" type="button"
-                            class="savepost inline-flex items-center px-4 py-2 my-3 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                            generate
-                        </button>
-                    </span> -->
             </form>
         </div>
 
@@ -172,7 +156,22 @@
 </div>
 
 <script>
-$('#select2-multitle-results').hide()
+CKEDITOR.replace( 'content' );
+    $('#select2-multitle-results').hide()
+
+    //MultiTitle
+    
+    //Once remove button is clicked
+    $('#wrapper-box').on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('span').parent('div').remove(); //Remove field html
+        var selId = $(this).attr('data-id');
+        console.log(selId);
+        $("option[data-id='" + selId + "']").remove(); 
+        x--; //Decrement field counter
+        var multval = $('#multitle').val();
+        window.livewire.emit('multiTitle',multval)
+    });
 $(document).ready(function(){
     var route = "{{ url('dashboard/autocomplete-search') }}";
     $('#search-loc').typeahead({
