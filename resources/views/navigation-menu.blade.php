@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -90,9 +90,14 @@
                                 </span>
                             @else
                                 <span class="inline-flex px-1">
-                                    <a href="{{route('login')}}" class="px-1">Login</a>
-                                    |
-                                    <a href="{{route('register')}}" class="px-1">Register</a>
+                                    <a href="{{route('login')}}" class="text-sm text-gray-700">
+                                        
+                                        <button data-mdb-ripple="true" data-mdb-ripple-color="light" class="w-24 rounded-full inline-block py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 ripple-surface-light" style="">
+
+                                        Login
+
+                                        </button>
+                                    </a>
                                 </span>
                             @endif
                         </x-slot>

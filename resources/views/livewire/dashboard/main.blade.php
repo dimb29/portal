@@ -1,22 +1,22 @@
 <x-slot name="header">
-    <div class="bg-white">
+    <!-- <div class="bg-white">
         <div class="hidden sm:flex max-w-7xl mx-auto">
             <img class="object-contain h-full w-full" src="{{url('storage/photos/banner.jpg')}}">
         </div>
         <div class="flex sm:hidden max-w-7xl mx-auto h-56">
             <img class="object-cover h-56 w-full" src="{{url('storage/photos/hp.jpg')}}">
         </div>
-    </div>
+    </div> -->
 </x-slot>
 
 <x-slot name="footer">
 </x-slot>
 
-<div class="py-12 bg-yellow bg-fixed ..." >
+<div class="bg-yellow sm:bg-white bg-fixed ..." >
 
-    <div class="flex flex-col sm:flex-row">
+    <div class="flex flex-col sm:flex-row max-w-6xl mx-auto">
         @if($headlines)
-        <div class="w-full sm:w-3/4 sm:pl-8 sm:pr-4">
+        <div class="w-full sm:w-2/3 sm:pl-8 sm:pr-4">
             @foreach($headlines as $headline)
             @if($loop->first)
             <div class="relative w-full bg-gray-800 text-white hover:text-blue-500 cursor-pointer">
@@ -28,25 +28,24 @@
                 <img class="static top-0 w-full h-96 object-cover" src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="foto-berita">
                 @endif
                 <p class="absolute top-0 bg-fuchsia-600 text-white shadow-md rounded-r-lg py-1 px-1 mt-4">HEADLINE</p>
-                <p class="absolute inset-x-0 bottom-0 pb-0.5 sm:pb-4 px-1 sm:px-2 font-bold text-sm sm:text-3xl
-                bg-gradient-to-t from-gray-900 to-gray-600/50">
+                <p class="textl pt-3 absolute inset-x-0 bottom-0 px-1 sm:px-2 font-bold text-sm sm:text-3xl" style="background: rgba(0, 0, 0, 0.5);">
                     {{$headline->title}}
                 </p>
             </div>
             @endif
             @endforeach
-            <div class="w-full bg-gray-900 px-1 pb-1 grid grid-cols-4 gap-4">
+            <div class="w-full bg-gray-900 px-1 pb-1 grid grid-cols-4 gap-1">
                 @foreach($headlines as $headline)
                 @if(!($loop->first))
-                <div class="h-20 sm:h-52 border border-solid hover:border-blue-500 text-white hover:text-blue-500 cursor-pointer">
+                <div class="h-20 sm:h-auto border border-solid hover:border-blue-500 text-white hover:text-blue-500 cursor-pointer">
                     @if($headline->images)
                         @foreach($headline->images as $image)
-                            <img src="{{url($image->url)}}" alt="photo-news" class="w-full h-10 sm:h-40 object-cover">
+                            <img src="{{url($image->url)}}" alt="photo-news" class="w-full h-10 sm:h-24 object-cover">
                         @endforeach
                     @else
-                        <img src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="photo-news" class="w-full h-10 sm:h-40 object-cover">
+                        <img src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="photo-news" class="w-full h-10 sm:h-24 object-cover">
                     @endif
-                    <p class="text-xs sm:text-base sm:font-bold sm:my-0.5 mx-1 line-clamp-2">
+                    <p class="textl2 text-xs sm:text-base sm:font-bold sm:my-0.5 mx-1">
                         {{$headline->title}}
                     </p>
                 </div>
@@ -54,110 +53,57 @@
                 @endforeach
             </div>
             <div class="mt-4 sm:mt-8">
-                <div class="flex flex-row items-end">
-                    <div class="w-3/12 sm:w-2/12 pl-0.5">
-                        <p class="border-b-4 border-solid border-b-blue-500 font-bold text-sm sm:text-xl">Berita Terkini</p>
+                <div class="flex flex-row items-end border-b border-solid border-black">
+                    <div class="w-5/12 sm:w-3/12 ml-2 sm:ml-0 pr-12 sm:pr-5">
+                        <p class="border-b-4 border-solid border-blue-500 font-bold text-base sm:text-lg">BERITA TERKINI</p>
                     </div>
-                    <div class="w-9/12 sm:w-10/12 pr-0.5">
-                        <p class="border-b border-solid text-xs sm:text-base text-right text-blue-400"><a href="#">lihat semua</a></p>
+                    <div class="w-7/12 sm:w-9/12 pr-0.5">
+                        <p class="text-xs sm:text-sm text-right text-blue-400"><a href="#">LIHAT SEMUA</a></p>
                     </div>
                 </div>
-                <div class="flex flex-col mt-4">
+                <div class="flex flex-col bg-white">
                     @if($allposts)
                     @foreach($allposts as $allpost)
-                    <div class="flex flex-row item-center h-14 sm:h-40 my-1 hover:text-blue-500 cursor-pointer">
-                        @if($allpost->images)
-                        @foreach($allpost->images as $image)
-                        <img src="{{url($image->url)}}" alt="photo-news"
-                        class="w-1/4 h-full object-cover border border-solid">
-                        @endforeach
-                        @else
-                        <img src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="photo-news"
-                        class="w-1/4 h-full object-cover border border-solid">
-                        @endif
-                        <div class="flex flex-col w-3/4 ml-4 my-auto">
-                            <p class="text-sm sm:text-xl line-clamp-1 sm:line-clamp-2">{{$allpost->title}}</p>
-                            <p class="text-xs sm:text-base text-gray-500">{{ $allpost->created_at->format('d F Y') }}</p>
+                    <div class="border-b sm:border-0 border-gray-200">
+                        <div class="flex flex-row item-center h-auto my-1 m-2 sm:m-0 hover:text-blue-500 cursor-pointer">
+                            <div class="w-1/4 rounded-lg">
+                                @if($allpost->images)
+                                @foreach($allpost->images as $image)
+                                <img src="{{url($image->url)}}" alt="photo-news"
+                                class="w-full h-24 sm:h-32 transform hover:scale-75 object-cover">
+                                @endforeach
+                                @else
+                                <img src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="photo-news"
+                                class="w-full h-24 sm:h-32 transform hover:scale-75 object-cover">
+                                @endif
+                            </div>
+                            <div class="flex flex-col w-3/4 h-24 sm:h-32 ml-4 border-0 sm:border-b">
+                                <div class="">
+                                    <p class="textl text-base sm:text-2xl font-thin">{{$allpost->title}}</p>
+                                </div>
+                                <div class="mt-auto">
+                                    <p class="text-xs sm:text-base text-gray-500">{{ $allpost->created_at->format('d F Y') }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <hr>
                     @endforeach
                     @endif
                 </div>
             </div>
         </div>
         @endif
-        <div class="w-full sm:w-1/4 sm:pl-4 sm:pr-8 flex flex-col">
+        <div class="w-full mt-4 sm:mt-0 sm:w-1/3 sm:pl-4 sm:pr-8 flex flex-col">
             <livewire:layouts.right-menu/>
         </div>
     </div>
 </div>
-            
 
-<div class="banner sm:hidden flex flex-row fixed justify-center z-50 left-0 right-0 bottom-0">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/stylee.css') }}">
-
-</head>
-
-<body class="bodyy">
-
-    <ul class="nav">
-        <span class="nav-indicator"></span>
-        <li>
-            <a class="animate-bounce" href="{{ url('account') }}">
-                <ion-icon name="people-circle-outline"></ion-icon>
-                <span class="title">About Us</span>
-            </a>
-        </li>
-        <li>
-            <a href="{{ url('lowongan/sj_send=') }}">
-                <ion-icon name="search-outline"></ion-icon>
-                <span class="title">Search</span>
-            </a>
-        </li>
-        <li>
-            <a href="{{ url('') }}" class="nav-item-active">
-                <ion-icon name="home-outline"></ion-icon>
-                <span class="title">Homepage</span>
-            </a>
-        </li>
-        <li>
-            <a href="{{ url('/user/saveloker') }}">
-                <ion-icon name="bookmarks-outline"></ion-icon>
-                <span class="title">Bookmark</span>
-            </a>
-        </li>
-        <li>
-            <a class="open-side">
-                <ion-icon name="person-outline"></ion-icon>
-                <span class="title">Account</span>
-            </a>
-        </li>
-    </ul>
-
-
-    <!-- https://css-tricks.com/gooey-effect/ -->
-
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="filter-svg">
-        <defs>
-            <filter id="goo">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-                <feBlend in="SourceGraphic" in2="goo" />
-            </filter>
-        </defs>
-    </svg>
-
-    
-
-</body>
-</div>
-
-
+<style>
+    * {
+        font-family: Montserrat-FF, Arial, Tahoma, sans-serif;
+    }
+</style>
 <script>
     $(document).ready(function(){
     if($('.myframe').is(":visible")){

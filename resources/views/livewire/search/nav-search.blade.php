@@ -1,5 +1,5 @@
 <div class="relative mt-2 mx-auto w-60 sm:w-80 mb-1" x-data="{searchmodal:false}">
-    <div class="absolute flex z-50 items-center ml-2 mt-2">
+    <div class="absolute right-0 flex z-50 items-center mr-3 mt-2">
     <lord-icon
     	src="https://cdn.lordicon.com/msoeawqm.json"
 		trigger="loop"
@@ -7,7 +7,7 @@
 		style="width:30px;height:30px">
 	</lord-icon>
     </div>
-    <input id="searchbox" autocomplete="off" wire:model="search_bar" x-on:keydown="searchmodal = true" x-on:keydown.enter="getUrl()" type="text" class="pl-11 pr-4 h-12 w-full rounded-md shadow-md bg-blue-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" placeholder="Search anything you want :)">
+    <input id="searchbox" autocomplete="off" wire:model="search_bar" x-on:keydown="searchmodal = true" x-on:keydown.enter="getUrl()" type="text" class="pl-3 pr-4 mt-1 h-10 w-full rounded-full shadow-md border focus:border-gray-100 focus:bg-white focus:ring-0 text-sm" placeholder="Cari Berita">
     <div x-show="searchmodal" class="fixed modal z-10 bg-white rounded rounded-b h-48 sm:h-72 overflow-auto zind70" x-on:click.away="searchmodal = false" @scroll.window.throttle="searchmodal = false">
         <div class="flex flex-col bg-white px-1 w-60 sm:w-80 text-center text-sm">
             <div class="flex flex-col mt-2 text-left">
