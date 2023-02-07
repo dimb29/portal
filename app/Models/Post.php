@@ -16,22 +16,11 @@ class Post extends Model
         'content',
         'post_type',
         'meta_data',
-        'jeniskerja_id',
-        'kualifikasilulus_id',
-        'pengalamankerja_id',
-        'spesialiskerja_id',
-        'tingkatkerja_id',
-        'per_name',
-        'province_id',
-        'location_id',
         'author_id',
-        'employer_id',
-        'email',
-        'wa',
-        'formulir',
-        'salary_start',
-        'salary_end',
-        'salary_check',
+        'category_id',
+        'views',
+        'headline',
+        'selected',
     ];
     
     // public function toSearchableArray(){
@@ -47,10 +36,6 @@ class Post extends Model
 
     // public function author_employer(){
     //     return $this->belongsTo(Employer::class, 'employer_id', 'id');
-    // }
-
-    // public function category(){
-    //     return $this->belongsTo(Category::class);
     // }
 
     public function like(){
@@ -71,6 +56,10 @@ class Post extends Model
 
     public function tags(){
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function category(){
+        return $this->belongsToMany(Category::class);
     }
 
     public function postsave(){

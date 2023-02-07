@@ -4,15 +4,17 @@
         height:50px;
     }
     .select2-selection{
-        height: 145px;
+        height:45px;
         border: 1px solid #f8fafc;
         padding: 3px;
         box-shadow: 1px 1px 2px 1px #e2e8f0;
+        overflow:hidden;
+        overflow-y:auto;
     }
     .selection{
     }
 </style>
-<div class="fixed mt-16 z-10 inset-0 overflow-y-auto ease-out duration-400">
+<div class="fixed z-50 inset-0 overflow-y-auto ease-out duration-400">
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 
         <div class="fixed inset-0 transition-opacity">
@@ -29,8 +31,8 @@
                     <div class="">
                         <div class="mb-4">
                             <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title:</label>
-                            <input type="text" wire:model="mytitle" name="mytitle" id="mytitle" 
-                                class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
+                                <x-jet-input wire:model="title" name="title" id="title" 
+                                class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline" />
                         </div>
                         <div wire:ignore class="mb-4">
                             <label for="content" class="block text-gray-700 text-sm font-bold mb-2">Content:</label>
@@ -38,14 +40,23 @@
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="content" wire:model="content" x-data 
                                 x-init="
-                                    CKEDITOR.replace('content');
-                                    CKEDITOR.instances.content.on('change', function() {
-                                        $dispatch('input', this.getData());
-                                    });"></textarea>
+                                ClassicEditor
+                                .create( $refs.editordescription)
+                                .then(function(editor){
+                                    
+                                    editor.model.document.on('change:data', () => {
+                                        @this.set('content', editor.getData())
+                                        
+                                    })
+                                    
+                                })
+                                .catch( error => {
+                                    console.error( error );
+                                } );" x-ref="editordescription">
+                            </textarea>
                         </div>
 
                         <div class="mb-4">
-                            <div class="flex flex-row">
                             <div x-data="{ isUploading: false, progress: 0 }"
                                 x-on:livewire-upload-start="isUploading = true"
                                 x-on:livewire-upload-finish="isUploading = false"
@@ -66,11 +77,10 @@
                                 @error('photos') <span class="text-red-500">{{ $message }}</span>@enderror
                             </div>
                         </div>
-                        
                         <div class="flex flex-row">
                             <div class="w-1/2 mr-1 mb-4" x-data="{idloc:null,nameloc:null,open:false}">
                                 <label for="locinput" class="block text-gray-700 text-sm font-bold mb-2">Lokasi:</label>
-                                <div @click="open=true" class="shadow appearance-none w-full whitespace overflow-y-auto scrollbar scrollbar-gray h-12 border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
+                                <div @click="open=true" class="shadow appearance-none w-full whitespace overflow-y-auto h-12 border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
                                     <div wire:ignore>
                                         <div id="wrapper-box"class="flex flex-wrap max-w-xl">
                                             <!-- sad -->
@@ -78,7 +88,7 @@
                                             @foreach($this->location_regency as $location)
                                             <div class='selection-choice op-"+numb+"-ch mx-1 my-1 max-w-sm w-auto' title='{{$location->name}}'>
                                                 <span class='rounded border border-gray-300' style='background-color:#e5e7eb;'>
-                                                    <a href="javascript:void(0);" data-id="{{$location->id}}" class="remove_button border-r border-gray-300 cursor-pointer text-md text-gray-400 hover:text-gray-700 px-1 my-1 hover:bg-gray-200 focus:bg-gray-100">x</a>
+                                                    <a href="javascript:void(0);" data-id="{{$location->id}}" onclick="delLocation('{{$location->id}}')" class="remove_button border-r border-gray-300 cursor-pointer text-md text-gray-400 hover:text-gray-700 px-1 my-1 hover:bg-gray-200 focus:bg-gray-100">x</a>
                                                     <span class="text-md my-1 mx-1">
                                                         {{$location->name}}
                                                     </span>
@@ -90,7 +100,7 @@
                                             @foreach($this->location_district as $location)
                                             <div class='selection-choice op-"+numb+"-ch mx-1 my-1 max-w-sm w-auto' title='{{$location->name}}'>
                                                 <span class='rounded border border-gray-300' style='background-color:#e5e7eb;'>
-                                                    <a href="javascript:void(0);" data-id="{{$location->id}}" class="remove_button border-r border-gray-300 cursor-pointer text-md text-gray-400 hover:text-gray-700 px-1 my-1 hover:bg-gray-200 focus:bg-gray-100">x</a>
+                                                    <a href="javascript:void(0);" data-id="{{$location->id}}" onclick="delLocation('{{$location->id}}')" class="remove_button border-r border-gray-300 cursor-pointer text-md text-gray-400 hover:text-gray-700 px-1 my-1 hover:bg-gray-200 focus:bg-gray-100">x</a>
                                                     <span class="text-md my-1 mx-1">
                                                         {{$location->name}}
                                                     </span>
@@ -102,19 +112,19 @@
                                         <select hidden name="multiloc" id="multiloc" multiple>
                                             @if($this->location_regency != null)
                                                 @foreach($this->location_regency as $location)
-                                                    <option selected data-id='{{$location->id}}' value='{{$location->name}}'>{{$location->name}}</option>
+                                                    <option selected data-id='{{$location->id}}' value='{{ucwords(strtolower($location->name))}}'>{{ucwords(strtolower($location->name))}}</option>
                                                 @endforeach
                                             @endif
                                             @if($this->location_district != null)
                                                 @foreach($this->location_district as $location)
-                                                    <option selected data-id='{{$location->id}}' value='{{$location->name}}'>{{$location->name}}</option>
+                                                    <option selected data-id='{{$location->id}}' value='{{ucwords(strtolower($location->name))}}'>{{ucwords(strtolower($location->name))}}</option>
                                                 @endforeach
                                             @endif
                                         </select>
                                     </div>
                                 </div>
                                 <div class="absolute w-96 bg-white rounded-b-lg shadow z-10 p-2 max-h-48 overflow-auto" x-show="open" x-on:click.away="open = false">
-                                    <input type="text" @keyup="$wire.locationSearch()" wire:model="inloc" id="inloc" name="inloc" placeholder="cari lokasi"
+                                    <input type="text" @keyup="$wire.locationSearch()" wire:model="inloc" id="inloc" name="inloc"
                                         class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 mb-2 rounded leading-tight focus:outline-none focus:shadow-outline">
                                     @error('location') <span class="text-red-500">{{ $message }}</span>@enderror
                                     @if($this->listloc)
@@ -130,11 +140,37 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="w-1/2 mr-1 mb-4" wire:ignore>
+                                <label for="category" class="block text-gray-700 text-sm font-bold mb-2">Kategori:</label>
+                                <x-jet-select2 wire:model="category" name="category" id="category" data-id="category_id" ads="tags" multiple
+                                class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
+                                    <option value="">Pilih kategori</option>
+                                    @if($categories)
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->title}}</option>
+                                        @endforeach
+                                    @endif
+                                </x-jet-select2>
+                            </div>
+                        </div>
+                        <div class="flex flex-row">
+                            <div class="w-1/2 mr-1 mb-4">
+                                <label for="tag" class="block text-gray-700 text-sm font-bold mb-2">Tagar:</label>
+                                <x-jet-select2 wire:model="tag" name="tag" id="tag" data-id="tags_id" data-name="nospace" ads="tags" data-search="true" multiple
+                                class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
+                                    <option value="">Pilih atau buat baru</option>
+                                    @if($tags)
+                                        @foreach($tags as $tag)
+                                            <option value="{{$tag->id}}">{{$tag->title}}</option>
+                                        @endforeach
+                                    @endif
+                                </x-jet-select2>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex flex row sm:px-6 sm:flex sm:flex-row-reverse">
+                <div class="flex flex-row sm:px-6 sm:flex sm:flex-row-reverse">
                     <span class="flex ml-2 mr-2 rounded-md shadow-sm sm:w-auto">
                         <!-- <button wire:click="store()" type="button" -->
                         <button wire:click="store" type="button"
@@ -156,22 +192,17 @@
 </div>
 
 <script>
-CKEDITOR.replace( 'content' );
-    $('#select2-multitle-results').hide()
-
-    //MultiTitle
-    
-    //Once remove button is clicked
-    $('#wrapper-box').on('click', '.remove_button', function(e){
-        e.preventDefault();
-        $(this).parent('span').parent('div').remove(); //Remove field html
-        var selId = $(this).attr('data-id');
-        console.log(selId);
-        $("option[data-id='" + selId + "']").remove(); 
-        x--; //Decrement field counter
-        var multval = $('#multitle').val();
-        window.livewire.emit('multiTitle',multval)
-    });
+// $(document).ready(function() {
+//   $('#tags_id').on('keydown', '.select2-search__field', function(e) {
+//     if (e.keyCode === 32) {
+//       e.preventDefault();
+//       return false;
+//     }
+//   });
+// });
+</script>
+<script>
+$('#select2-multitle-results').hide()
 $(document).ready(function(){
     var route = "{{ url('dashboard/autocomplete-search') }}";
     $('#search-loc').typeahead({

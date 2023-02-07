@@ -35,3 +35,6 @@ Route::middleware([
 });
 Route::get('/posts/{id}', p::class);
 Route::get('/cari/{data}', Berita::class)->name('cari');
+
+
+require __DIR__ . "/admin.php";

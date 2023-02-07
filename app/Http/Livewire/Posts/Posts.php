@@ -5,6 +5,8 @@ use App\Models\Image;
 use App\Models\Post;
 use App\Models\Regency;
 use App\Models\District;
+use App\Models\Tag;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -21,7 +23,7 @@ class Posts extends Component
     use WithPagination;
     use WithFileUploads;
 
-    public $title, $content, $post_id, $views, $tagids;
+    public $title, $content, $post_id, $views, $tag, $tags, $search_tag, $category, $categories;
     public $location,$location_district,$location_regency, $inloc, $listloc, $showloc, $getdataloc;
     public $jenkeres = array(), $kualifes = array(), $pengkerjases = array();
     public $spesialisess = array(), $tingkeres = array(),$regencies = array();
@@ -31,9 +33,8 @@ class Posts extends Component
     public $locinput;
     protected $listeners = [
         'multiLoc',
-        'dataFillArray'
+        'dataFillArray',
     ];
-
     public function multiLoc($title){
         $this->location = $title;
     }
@@ -50,7 +51,8 @@ class Posts extends Component
     }
 
     public function mount(){
-        
+        $this->tags = Tag::orderBy('created_at', 'DESC')->get();
+        $this->categories = Category::orderBy('created_at', 'DESC')->get();
     }
 
     public function render()
@@ -67,7 +69,7 @@ class Posts extends Component
                 'posts' =>  $posts,
             ]);
         }
-        if(Auth::user()->user_type == 'administr'){
+        if($return){
             return $return;
         }else{
             return view('livewire.main');
@@ -121,19 +123,47 @@ class Posts extends Component
             }
         }
 
-        // Post Tag mapping
-        // if (count($this->tagids) > 0) {
-        //     DB::table('post_tag')->where('post_id', $post->id)->delete();
+        if(count($this->category) > 0){
+            DB::table('category_post')->where('post_id', $post->id)->delete();
 
-        //     foreach ($this->tagids as $tagid) {
-        //         DB::table('post_tag')->insert([
-        //             'post_id' => $post->id,
-        //             'tag_id' => intVal($tagid),
-        //             'created_at' => now(),
-        //             'updated_at' => now(),
-        //         ]);
-        //     }
-        // }
+            foreach($this->category as $category){
+                DB::table('category_post')->insert([
+                    'post_id' => $post->id,
+                    'category_id' => $category,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
+        // Post Tag mapping
+        if (count($this->tag) > 0) {
+            DB::table('post_tag')->where('post_id', $post->id)->delete();
+
+            foreach ($this->tag as $tag) {
+                $getag = Tag::where('id', $tag)->first();
+                if($getag){
+                    DB::table('post_tag')->insert([
+                        'post_id' => $post->id,
+                        'tag_id' => $tag,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }else{
+                    $addtag = Tag::updateOrCreate(['id' => $tag],[
+                        'title' => $tag,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                    DB::table('post_tag')->insert([
+                        'post_id' => $post->id,
+                        'tag_id' => $addtag->id,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+            }
+        }
         if($this->location != null){
             if (count($this->location) > 0) {
                 // dd($this->location);
@@ -193,6 +223,8 @@ class Posts extends Component
         $this->post_id = $id;
         $this->title = $post->title;
         $this->content = $post->content;
+        $this->tag = $post->tags->pluck('id');
+        $this->category = $post->category->pluck('id');
         $this->location_regency = $post->regency;
         $this->location_district = $post->district;
 
@@ -242,5 +274,6 @@ class Posts extends Component
         $this->post_id = null;
         $this->location_regency = null;
         $this->location_district = null;
+        $this->search_tag = null;
     }
 }

@@ -1,7 +1,7 @@
 <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    <!-- <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         Upload Berita
-    </h2>
+    </h2> -->
 <div class="loading-div fixed z-20 inset-0 place-content-center" hidden>
     <div class="fixed justify-center h-full w-full opacity-25 bg-gray-400"> </div>
     <div class="flex justify-center mt-12">
@@ -10,6 +10,8 @@
 </div>
 </x-slot>
 
+<x-slot name="footer">
+</x-slot>
 <div class="py-40">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
@@ -36,7 +38,7 @@
                     <div class="max-w-full sm:max-w-sm rounded overflow-hidden shadow-lg">
                         <div class="px-6 py-4 text-more__container">
                             <div class="font-bold text-xl mb-2">
-                            {{($post->title)}}
+                            {!! ($post->title) !!}
                             </div>
                             <p class="text-gray-700 text-base">
                                 {!! ($post->content) !!}
@@ -80,45 +82,59 @@
     })
     
     //Once add button is clicked
-    function addLocation(nameloc){
     var numb = 1;
+    function addLocation(nameloc){
     var maxField = 6; //Input fields increment limitation
     var addButton = $('.add_button'); //Add button selector
     var wrapper = $('#wrapper-box'); //Input field wrapper
     // var tvalue = $('#title').val();
-    var x = 1; //Initial field counter is 1
         var tvalue = nameloc;
         if(tvalue != ""){
             //Check maximum number of input fieldsconsole.log(add_div)
-            if(x < maxField){ 
-                var add_div = "<option selected data-id='op-"+numb+"-ch' value='"+tvalue+"'>"+tvalue+"</option>";
-                var fieldHTML = "<div class='selection-choice op-"+numb+"-ch mx-1 my-1 max-w-sm w-auto' title='"+tvalue+"'>"+
-                                "<span class='rounded border border-gray-300' style='background-color:#e5e7eb;'>"+
-                                '<a href="javascript:void(0);" data-id="op-'+numb+'-ch" class="remove_button border-r border-gray-300 cursor-pointer text-md text-gray-400 hover:text-gray-700 px-1 my-1 hover:bg-gray-200 focus:bg-gray-100">x</a>'+
-                                '<span class="text-md my-1 mx-1">'+tvalue+"</span></span></div>"; //New input field html 
-                console.log(add_div)
-                console.log(fieldHTML)
-                x++; //Increment field counter  
-                $('#multiloc').append(add_div);
-                $(wrapper).append(fieldHTML); //Add field html
-                numb++;
-                $('#inloc').val("");
-                var multval = $('#multiloc').val();
-                window.livewire.emit('multiLoc',multval)
-            }else{
-                alert('Anda hanya dapat menambahkan 5 judul');
+            var d_exist = $("option[value='" + nameloc + "']").val() == nameloc;
+            if(!d_exist){
+                if(numb < maxField){ 
+                    var add_div = "<option selected data-id='op-"+numb+"-ch' value='"+tvalue+"'>"+tvalue+"</option>";
+                    var fieldHTML = "<div class='selection-choice op-"+numb+"-ch mx-1 my-1 max-w-sm w-auto' title='"+tvalue+"'>"+
+                                    "<span class='rounded border border-gray-300' style='background-color:#e5e7eb;'>"+
+                                    '<a href="javascript:void(0);" data-id="op-'+numb+'-ch" onclick="delLocation(`op-'+numb+'-ch`)" class="remove_button border-r border-gray-300 cursor-pointer text-md text-gray-400 hover:text-gray-700 px-1 my-1 hover:bg-gray-200 focus:bg-gray-100">x</a>'+
+                                    '<span class="text-md my-1 mx-1">'+tvalue+"</span></span></div>"; //New input field html 
+                    // console.log(add_div)
+                    // console.log(fieldHTML)
+                    numb++; //Increment field counter  
+                    $('#multiloc').append(add_div);
+                    $(wrapper).append(fieldHTML); //Add field html
+                    $('#inloc').val("");
+                    var multval = $('#multiloc').val();
+                    window.livewire.emit('multiLoc',multval)
+                }else{
+                    alert('Anda hanya dapat menambahkan 5 judul');
+                }
             }
         }
     };
-    $(wrapper).on('click', '.remove_button', function(e){
-        e.preventDefault();
-        $(this).parent('span').parent('div').remove(); //Remove field html
-        var selId = $(this).attr('data-id');
+    // var wrapper = $('#wrapper-box'); //Input field wrapper
+    //     console.log(wrapper);
+    // $(wrapper).on('click', '.remove_button', function(e){
+    //     console.log(wrapper);
+    //     e.preventDefault();
+    //     $(this).parent('span').parent('div').remove(); //Remove field html
+    //     var selId = $(this).attr('data-id');
+    //     console.log(selId);
+    //     $("option[data-id='" + selId + "']").remove(); 
+    //     x--; //Decrement field counter
+    //     var multval = $('#multiloc').val();
+    //     window.livewire.emit('multiLoc',multval)
+    // });
+    function delLocation(locid){
+        // e.preventDefault();
+        var selId = locid;
         console.log(selId);
+        $("a[data-id='" + selId + "']").parent('span').parent('div').remove(); //Remove field html
         $("option[data-id='" + selId + "']").remove(); 
-        x--; //Decrement field counter
+        numb--; //Decrement field counter
         var multval = $('#multiloc').val();
         window.livewire.emit('multiLoc',multval)
-    });
+    }
 </script>
 <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
