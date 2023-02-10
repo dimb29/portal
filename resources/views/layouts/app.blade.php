@@ -17,6 +17,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.0/slick.min.css" />	
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.0/slick-theme.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/themes/airbnb.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto+Slab|Roboto:300,400,500,700" rel="stylesheet" />
+
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
@@ -56,6 +58,39 @@
                 {{ $slot }}
             </main>
         </div>
+
+        @if (isset($footer))
+        <div class="border-t-4 py-8 bg-black border-blue-500">
+            <div class="max-w-6xl px-8 mx-auto ">     
+                <div class="">                       
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="single_footer single_footer_address">
+                            <h4>Subscribe today</h4>
+                            <div class="w-72">                           
+                                <form action="#" class="subscribe">
+                                    <input type="text" class="pl-3 pr-4 h-10 w-full rounded-lg text-sm" placeholder="Enter Email Address">
+                                    <button type="button" class="subscribe__btn absolute top-0 right-0 mr-4 my-auto h-10 text-blue-500"><i class="fas fa-paper-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="social_profile">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                            </ul>
+                        </div>                          
+                    </div><!--- END COL -->         
+                </div><!--- END ROW --> 
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <p class="copyright">Copyright © 2023 <a href="#">Technoverse Indonesia</a>.</p>
+                    </div><!--- END COL -->                 
+                </div><!--- END ROW -->                 
+            </div><!--- END CONTAINER -->
+        </div>
+        @endif
 
         @stack('modals')
 

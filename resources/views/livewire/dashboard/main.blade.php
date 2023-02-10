@@ -27,8 +27,8 @@
                 @else
                 <img class="static top-0 w-full h-96 object-cover" src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="foto-berita">
                 @endif
-                <p class="absolute top-0 bg-fuchsia-600 text-white shadow-md rounded-r-lg py-1 px-1 mt-4">HEADLINE</p>
-                <p class="textl pt-3 absolute inset-x-0 bottom-0 px-1 sm:px-2 font-bold text-sm sm:text-3xl" style="background: rgba(0, 0, 0, 0.5);">
+                <p class="absolute top-0 bg-white text-blue-300 shadow-md rounded-r-lg py-1 pl-2 pr-4 mt-4 font-bold">HEADLINE</p>
+                <p class="texl1 pt-3 absolute inset-x-0 bottom-0 px-1 sm:px-2 text-sm sm:text-3xl" style="background: rgba(0, 0, 0, 0.5);">
                     {{$headline->title}}
                 </p>
             </div>
@@ -45,7 +45,7 @@
                     @else
                         <img src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="photo-news" class="w-full h-10 sm:h-24 object-cover">
                     @endif
-                    <p class="textl2 text-xs sm:text-base sm:font-bold sm:my-0.5 mx-1">
+                    <p class="textl2 text-xs sm:my-0.5 mx-1">
                         {{$headline->title}}
                     </p>
                 </div>
@@ -53,9 +53,9 @@
                 @endforeach
             </div>
             <div class="mt-4 sm:mt-8">
-                <div class="flex flex-row items-end border-b border-solid border-black">
-                    <div class="w-5/12 sm:w-3/12 ml-2 sm:ml-0 pr-12 sm:pr-5">
-                        <p class="border-b-4 border-solid border-blue-500 font-bold text-base sm:text-lg">BERITA TERKINI</p>
+                <div class="flex flex-row border-b border-solid border-gray-400">
+                    <div class="w-5/12 sm:w-3/12 ml-2 sm:ml-0 pr-10 sm:pr-5">
+                        <p class="border-b-4 border-solid border-blue-500 font-bold text-lg">BERITA TERKINI</p>
                     </div>
                     <div class="w-7/12 sm:w-9/12 pr-0.5">
                         <p class="text-xs sm:text-sm text-right text-blue-400"><a href="#">LIHAT SEMUA</a></p>
@@ -65,21 +65,21 @@
                     @if($allposts)
                     @foreach($allposts as $allpost)
                     <div class="border-b sm:border-0 border-gray-200">
-                        <div class="flex flex-row item-center h-auto my-1 m-2 sm:m-0 hover:text-blue-500 cursor-pointer">
+                        <div class="flex flex-row item-center h-auto mb-2 sm:mb-3 mt-2 sm:mt-0 mx-2 sm:mx-0 hover:text-blue-500 cursor-pointer">
                             <div class="w-1/4 rounded-lg">
                                 @if($allpost->images)
                                 @foreach($allpost->images as $image)
                                 <img src="{{url($image->url)}}" alt="photo-news"
-                                class="w-full h-24 sm:h-32 transform hover:scale-75 object-cover">
+                                class="w-full h-24 sm:h-32 object-cover">
                                 @endforeach
                                 @else
                                 <img src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="photo-news"
-                                class="w-full h-24 sm:h-32 transform hover:scale-75 object-cover">
+                                class="w-full h-24 sm:h-32 object-cover">
                                 @endif
                             </div>
                             <div class="flex flex-col w-3/4 h-24 sm:h-32 ml-4 border-0 sm:border-b">
                                 <div class="">
-                                    <p class="textl text-base sm:text-2xl font-thin">{{$allpost->title}}</p>
+                                    <p class="textl text-base sm:text-2xl">{{$allpost->title}}</p>
                                 </div>
                                 <div class="mt-auto">
                                     <p class="text-xs sm:text-base text-gray-500">{{ $allpost->created_at->format('d F Y') }}</p>
@@ -101,7 +101,8 @@
 
 <style>
     * {
-        font-family: Montserrat-FF, Arial, Tahoma, sans-serif;
+        font-family: Roboto,sans-serif;
+        font-weight: 300;
     }
 </style>
 <script>
