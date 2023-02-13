@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/dimb29/portal#readme",
   "dependencies": {
-    "@tailwindcss/ui": "^0.7.2",
+    "@tailwindcss/ui": "^0.3.1",
     "chart.js": "^4.2.0"
   }
 }
