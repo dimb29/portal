@@ -8,7 +8,7 @@ module.exports = {
     ],
 
     theme: {
-      
+
       listStyleType: {
         disc: 'disc',
         decimal: 'decimal',
@@ -16,7 +16,6 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
-                cusheading: ['-apple-system', 'system-ui', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Fira Sans', 'Ubuntu', 'Oxygen', 'Oxygen Sans', 'Cantarell', 'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Lucida Grande', 'Helvetica', 'Arial', 'sans-serif'],
             },
 
             colors: {
@@ -70,5 +69,5 @@ module.exports = {
         opacity: ['responsive', 'hover', 'focus', 'disabled'],
     },
 
-    plugins: [],
+    plugins: [require('@tailwindcss/ui')],
 };
