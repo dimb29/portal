@@ -26,6 +26,9 @@ class Post extends Component
             'images', 
             'videos', 
             ])->find($id);
+        if($post->verified == 0 || $post->verified == 2){
+            return redirect('dashboard');
+        }
         if(Auth::user() != null){
             $this->acv = Auth::user()->cv;
         }

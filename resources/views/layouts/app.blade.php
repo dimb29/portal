@@ -39,8 +39,8 @@
     <body class="font-sans antialiased">
         <x-jet-banner />
 
+        @if(!isset($admin))
         <div class="min-h-screen bg-white">
-            @if(!isset($admin))
                 @livewire('navigation-menu')
                 <!-- Page Heading -->
                 @if (isset($header))
@@ -56,15 +56,24 @@
                 {{ $slot }}
             </main>
             @else
-            <div class="flex flex-row w-full h-full" x-data="{showSide:false}">
+            <div class="inline-flex w-full h-full" x-data="{showSide:false}">
                 @livewire('admin.layouts.side-menu')
-                <div class="content">
+                <div class="w-screen min-h-screen bg-white">
                     @livewire('admin.layouts.navigation-menu')
-
-                <!-- Page Content -->
-                <main>
-                    {{ $slot }}
-                </main>
+                    <!-- Page Heading -->
+                    @if (isset($header))
+                        <header class="bg-white">
+                            <div class="px-1 sm:px-8 py-1 sm:py-4">
+                                <div class="flex flex-row w-full px-1 sm:px-2 mb-2 border-b-2 border-solid text-xs sm:text-sm">
+                                    {{ $header }}
+                                </div>
+                            </div>
+                        </header>
+                    @endif
+                    <!-- Page Content -->
+                    <main>
+                        {{ $slot }}
+                    </main>
                 </div>
             </div>
             @endif

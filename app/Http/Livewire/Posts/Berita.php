@@ -53,7 +53,7 @@ class Berita extends Component
 
     public function render(){
 
-        $posts = Post::with('author')->orderBy('created_at', 'DESC');
+        $posts = Post::with('author')->where('verified', 1)->orderBy('created_at', 'DESC');
         if($this->search != null){
             $searchdata = explode(' ', $this->search);
             foreach($searchdata as $searchdt){

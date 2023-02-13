@@ -27,7 +27,7 @@ use Session;
 
 class Main extends Component {
     public function render() {
-        $posts = Post::orderBy('created_at', 'DESC');
+        $posts = Post::orderBy('created_at', 'DESC')->where('verified', 1);
         $headlines = $posts->where('headline', 1)->take(5)->get();
         $allposts = $posts->take(10)->get();
         return view('livewire.dashboard.main',[

@@ -21,6 +21,7 @@ class Post extends Model
         'views',
         'headline',
         'selected',
+        'verified',
     ];
     
     // public function toSearchableArray(){

@@ -1,7 +1,7 @@
 
 
 <div wire:ignore x-data="{ model: @entangle($attributes->wire('model')) }" x-init="function () {
-  if('{{$attributes['ads']}}' == 'tags'){
+  if('{{$attributes['ads']}}' == 'tag_it'){
     this.select2 = $(this.$refs.select).select2({tags: true});
   }else{
     this.select2 = $(this.$refs.select).select2();
