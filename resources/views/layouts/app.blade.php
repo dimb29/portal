@@ -38,7 +38,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     </head>
-    <body class="font-sans antialiased mt-20">
+    <body class="font-sans antialiased">
         <x-jet-banner />
 
         @if(!isset($admin))

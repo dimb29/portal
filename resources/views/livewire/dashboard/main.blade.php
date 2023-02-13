@@ -12,7 +12,7 @@
 <x-slot name="footer">
 </x-slot>
 
-<div class="bg-yellow sm:bg-white bg-fixed ..." >
+<div class="bg-yellow sm:bg-white bg-fixed mt-20" >
 
     <div class="flex flex-col sm:flex-row max-w-6xl mx-auto">
         @if($headlines)
