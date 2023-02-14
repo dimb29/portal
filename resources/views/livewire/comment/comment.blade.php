@@ -1,6 +1,6 @@
 <div class="w-full p-4" x-data="{showComment:false}">
     <div class="flex flex-row p-2">
-        <i wire:click="@if(count($post->like) > 0) unLikeIt([{{$post->id}}]) @else likeIt([{{$post->id}}]) @endif" 
+        <!-- <i wire:click="@if(count($post->like) > 0) unLikeIt([{{$post->id}}]) @else likeIt([{{$post->id}}]) @endif" 
         class="@if(count($post->like) > 0) fa-solid @else fa-regular @endif fa-thumbs-up mx-1 my-auto cursor-pointer"></i>
         <p wire:click="@if(count($post->like) > 0) unLikeIt([{{$post->id}}]) @else likeIt([{{$post->id}}]) @endif" 
             class="mr-2 my-auto text-gray-500 text-sm cursor-pointer">
@@ -8,7 +8,7 @@
                 {{count($post->like)}} 
             @endif
             Suka
-        </p>
+        </p> -->
         <i class="fa-regular fa-comment-dots mx-1 my-auto text-base cursor-pointer" @click="showComment =! showComment"></i> 
         <p class="mr-2 my-auto text-gray-500 text-sm cursor-pointer" @click="showComment =! showComment">Komentar</p>
     </div>

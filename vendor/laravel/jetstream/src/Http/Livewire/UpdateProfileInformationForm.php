@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\URL;
 
 class UpdateProfileInformationForm extends Component
 {
@@ -60,7 +61,11 @@ class UpdateProfileInformationForm extends Component
         );
 
         if (isset($this->photo)) {
-            return redirect()->route('profile.show');
+            if(str_contains(URL::previous(), 'admin')):
+                return redirect()->route('admin.profile.show');
+            else:
+                return redirect()->route('profile.show');
+            endif;
         }
 
         $this->emit('saved');
@@ -108,7 +113,7 @@ class UpdateProfileInformationForm extends Component
      * @return \Illuminate\View\View
      */
     public function render()
-    {
+    { 
         return view('profile.update-profile-information-form');
     }
 }

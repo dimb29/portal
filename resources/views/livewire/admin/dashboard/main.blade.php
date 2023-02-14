@@ -15,7 +15,7 @@
                     <p class="text-xl sm:text-4xl my-1">{{count($posts)}}</p>
                     <p class="my-1 ml-1">Berita</p>
                 </div>
-                <i class="fa-regular fa-newspaper font-black text-7xl text-right w-1/2 opacity-25"></i>
+                <i class="fa-regular fa-newspaper font-black text-6xl text-right w-1/2 opacity-25"></i>
             </div>
             <a href="{{route('admin.posts')}}" class="absolute w-full bottom-0 left-0 right-0 h-10 bg-gray-900 opacity-25 hover:bg-gray-800 cursor-pointer">
                 <div class="w-full h-full inline-flex justify-center">
@@ -30,7 +30,7 @@
                     <p class="text-xl sm:text-4xl my-1">{{count($users)}}</p>
                     <p class="my-1 ml-1">Pengguna</p>
                 </div>
-                <i class="fa-solid fa-users font-black text-7xl text-right w-1/2 opacity-25"></i>
+                <i class="fa-solid fa-users font-black text-6xl text-right w-1/2 opacity-25"></i>
             </div>
             <a href="{{route('admin.users')}}" class="absolute w-full bottom-0 left-0 right-0 h-10 bg-gray-900 opacity-25 hover:bg-gray-800 cursor-pointer">
                 <div class="w-full h-full inline-flex justify-center">
@@ -45,7 +45,7 @@
                     <p class="text-xl sm:text-4xl my-1">{{count($categories)}}</p>
                     <p class="my-1 ml-1">Kategori</p>
                 </div>
-                <i class="fa-solid fa-quote-left font-black text-7xl text-right w-1/2 opacity-25"></i>
+                <i class="fa-solid fa-quote-left font-black text-6xl text-right w-1/2 opacity-25"></i>
             </div>
             <a href="{{route('admin.categories')}}" class="absolute w-full bottom-0 left-0 right-0 h-10 bg-gray-900 opacity-25 hover:bg-gray-800 cursor-pointer">
                 <div class="w-full h-full inline-flex justify-center">
@@ -60,7 +60,7 @@
                     <p class="text-xl sm:text-4xl my-1">{{count($tags)}}</p>
                     <p class="my-1 ml-1">Tagar</p>
                 </div>
-                <i class="fa-solid fa-tag font-black text-7xl text-right w-1/2 opacity-25"></i>
+                <i class="fa-solid fa-tag font-black text-6xl text-right w-1/2 opacity-25"></i>
             </div>
             <a href="{{route('admin.tags')}}" class="absolute w-full bottom-0 left-0 right-0 h-10 bg-gray-900 opacity-25 hover:bg-gray-800 cursor-pointer">
                 <div class="w-full h-full inline-flex justify-center">

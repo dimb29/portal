@@ -38,11 +38,11 @@
 <div x-show="!showSide" x-transition:enter.delay.300ms
     class="py-2 bg-gray-800 text-gray-300">
     <a href="{{ route('admin.dashboard') }}"
-        class="flex flex-row px-2 py-3 text-gray-300 hover:text-gray-400 border-b border-solid border-gray-700 cursor-pointer">
+        class="flex flex-row px-2 py-3 justify-center text-gray-300 hover:text-gray-400 border-b border-solid border-gray-700 cursor-pointer">
         <x-jet-application-mark class="block h-9 w-auto mx-0.5 my-auto bg-gray-300 rounded-full" />
     </a>
     <a href="{{ route('admin.profile.show') }}"
-        class="flex flex-row mx-2 py-3 text-gray-300 hover:text-gray-400 border-b border-solid border-gray-700 cursor-pointer">
+        class="flex flex-row mx-2 py-3 justify-center text-gray-300 hover:text-gray-400 border-b border-solid border-gray-700 cursor-pointer">
         <img src="{{url(Auth::user()->profile_photo_url)}}" alt="poto-user" class="block bg-gray-300 rounded-full h-7 mx-auto my-auto" />
     </a>
     <div class="mt-3 px-1">

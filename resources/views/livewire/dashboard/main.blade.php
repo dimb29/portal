@@ -19,7 +19,7 @@
         <div class="w-full sm:w-2/3 sm:pl-8 sm:pr-4">
             @foreach($headlines as $headline)
             @if($loop->first)
-            <div class="relative w-full bg-gray-800 text-white hover:text-blue-500 cursor-pointer">
+            <a href="{{url('posts/'.$headline->id)}}" class="relative w-full bg-gray-800 text-white hover:text-blue-500 cursor-pointer">
                 @if($headline->images)
                 @foreach($headline->images as $image)
                 <img class="static top-0 w-full h-96 object-cover" src="{{url($image->url)}}" alt="foto-berita">
@@ -31,13 +31,13 @@
                 <p class="texl1 pt-3 absolute inset-x-0 bottom-0 px-1 sm:px-2 text-sm sm:text-3xl" style="background: rgba(0, 0, 0, 0.5);">
                     {{$headline->title}}
                 </p>
-            </div>
+            </a>
             @endif
             @endforeach
             <div class="w-full bg-gray-900 px-1 pb-1 grid grid-cols-4 gap-1">
                 @foreach($headlines as $headline)
                 @if(!($loop->first))
-                <div class="h-20 sm:h-auto border border-solid hover:border-blue-500 text-white hover:text-blue-500 cursor-pointer">
+                <a href="{{url('posts/'.$headline->id)}}" class="h-20 sm:h-auto border border-solid hover:border-blue-500 text-white hover:text-blue-500 cursor-pointer">
                     @if($headline->images)
                         @foreach($headline->images as $image)
                             <img src="{{url($image->url)}}" alt="photo-news" class="w-full h-10 sm:h-24 object-cover">
@@ -48,7 +48,7 @@
                     <p class="textl2 text-xs sm:my-0.5 mx-1">
                         {{$headline->title}}
                     </p>
-                </div>
+                </a>
                 @endif
                 @endforeach
             </div>
@@ -64,7 +64,7 @@
                 <div class="flex flex-col bg-white">
                     @if($allposts)
                     @foreach($allposts as $allpost)
-                    <div class="border-b sm:border-0 border-gray-200">
+                    <a href="{{url('posts/'.$allpost->id)}}" class="border-b sm:border-0 border-gray-200">
                         <div class="flex flex-row item-center h-auto mb-2 sm:mb-3 mt-2 sm:mt-0 mx-2 sm:mx-0 hover:text-blue-500 cursor-pointer">
                             <div class="w-1/4 rounded-lg">
                                 @if($allpost->images)
@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     @endforeach
                     @endif
                 </div>

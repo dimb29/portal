@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Posts;
 
 use App\Models\Post as PostModel;
 use App\Models\User;
+use App\Models\Comment as Comments;
+use App\Models\Likes;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,37 +18,60 @@ class Post extends Component
 {
     use WithFileUploads;
 
-    public $post, $isOpen = 0, $isSuccess = 0;
-    public $cv, $acv, $more_info, $post_id;
+    public $isOpen = 0, $isSuccess = 0;
+    public $cv, $acv, $more_info, $post_id, $authid, $authtype;
 
     public function mount($id)
     {
-        $post = $this->post = PostModel::with([
-            'author', 
-            'images', 
-            'videos', 
-            ])->find($id);
-        if($post->verified == 0 || $post->verified == 2){
-            return redirect('dashboard');
-        }
-        if(Auth::user() != null){
-            $this->acv = Auth::user()->cv;
-        }
-
-        
+        // if(Auth::user() != null){
+        //     $this->acv = Auth::user()->cv;
+        // }
+        $this->post_id = $id;
     }
 
     public function render()
     {
-        
-        
+        $post = PostModel::with([
+            'author', 
+            'images', 
+            'videos', 
+            ])->where('id', $this->post_id)->first();
+        if($post->verified == 0 || $post->verified == 2){
+            return redirect('dashboard');
+        }
+        if(Auth::user()){
+            $authid = $this->authid = Auth::user()->id;
+            $authtype = $this->authtype = 'user';
+        }
         $jobsave = PostModel::rightJoin('post_save', 'posts.id', 'post_save.post_id')->get();
-        
-
         return view('livewire.posts.post', [
-
+        'post' => $post,
         'simpan_job' => $jobsave,
     ]);
+    }
+
+    public function LikeIt($data){
+        if($this->authid){
+            $post_id = $data[0];
+            $comment_id = null;
+            $like = Likes::create([
+                'post_id' =>$post_id,
+                'user_id' => $this->authid,
+                'user_type' => $this->authtype,
+            ]);
+            $this->emit('refreshMenu', 'true');
+        }else{
+            return redirect('/login');
+        }
+    }
+
+    public function UnLikeIt($data){
+        $delete_like = Likes::where([
+            'post_id' => $data[0],
+            'user_id' => $this->authid,
+            'user_type' => $this->authtype,
+        ])->delete();
+        $this->emit('refreshMenu', 'true');
     }
 
     public function saveJob($id){

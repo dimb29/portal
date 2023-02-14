@@ -23,7 +23,7 @@
                 <div class="flex flex-col mt-4">
                     @if($allposts)
                     @foreach($allposts as $allpost)
-                    <div class="flex flex-row item-center h-14 sm:h-40 my-1 hover:text-blue-500 cursor-pointer">
+                    <a href="{{url('posts/'.$allpost->id)}}" class="flex flex-row item-center h-14 sm:h-40 my-1 hover:text-blue-500 cursor-pointer">
                         @if($allpost->images)
                         @foreach($allpost->images as $image)
                         <img src="{{url($image->url)}}" alt="photo-news"
@@ -37,7 +37,7 @@
                             <p class="text-sm sm:text-xl line-clamp-1 sm:line-clamp-2">{{$allpost->title}}</p>
                             <p class="text-xs sm:text-base text-gray-500">{{ $allpost->created_at->format('d F Y') }}</p>
                         </div>
-                    </div>
+                    </a>
                     <hr>
                     @endforeach
                     @endif
