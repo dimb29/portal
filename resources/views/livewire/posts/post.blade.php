@@ -6,9 +6,9 @@
 
 <x-slot name="footer">
 </x-slot>
-<div class="pt-0 sm:pt-12">
-    <div class="flex flex-col sm:flex-row">
-        <div class="w-full sm:w-3/4 sm:pl-8 sm:pr-4">
+<div class="mt-20">
+    <div class="flex flex-col sm:flex-row max-w-6xl mx-auto">
+        <div class="w-full sm:w-8/12 sm:pl-8 sm:pr-4">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 @if (session()->has('message'))
                     <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
@@ -128,7 +128,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-full sm:w-1/4 sm:pl-4 sm:pr-8 flex flex-col">
+        <div class="w-full sm:w-4/12 sm:pl-4 sm:pr-8 flex flex-col">
             <livewire:layouts.right-menu/>
         </div>
     </div>
