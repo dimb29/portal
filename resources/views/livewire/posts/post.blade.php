@@ -18,7 +18,7 @@
                                 <p class="text-sm">{{ session('message') }}</p>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 @endif
                 <div class="flex-auto m-1">
                     <div class="grid grid-flow-col">
