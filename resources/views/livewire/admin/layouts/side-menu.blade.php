@@ -8,7 +8,7 @@
     <a href="{{ route('admin.dashboard') }}"
         class="flex flex-row px-2 py-3 mx-auto text-gray-300 hover:text-gray-400 border-b border-solid border-gray-700 cursor-pointer">
         <x-jet-application-mark class="block h-9 w-auto mx-0.5 my-auto bg-gray-300 rounded-full" />
-        <p class="text-sm sm:text-xl font-bold mx-0.5 my-auto">{{__('Bangkit Indonesiaku')}}</p>
+        <p class="text-sm sm:text-2xl font-bold mx-2 my-auto">{{__('Bangkit Indonesiaku')}}</p>
     </a>
     <a href="{{ route('admin.profile.show') }}"
         class="flex flex-row mx-2 py-3 text-gray-300 hover:text-gray-400 border-b border-solid border-gray-700 cursor-pointer">
@@ -16,21 +16,21 @@
         <p class="text-sm sm:text-base font-semibold mx-0.5 my-auto">{{Auth::user()->name}}</p>
     </a>
     <div class="mt-3 px-1">
-        <x-jet-side-link href="{{ route('admin.posts') }}" :active="request()->routeIs('admin.posts')">
-            <i class="fa-solid fa-envelopes-bulk text-sm sm:text-base my-auto mx-2"></i>
+        <x-jet-side-link href="{{ route('admin.posts') }}" :active="request()->routeIs('admin.posts')" class="my-2 h-14">
+            <i class="fa-solid fa-envelopes-bulk text-sm sm:text-xl my-auto mx-2"></i>
             <!-- <i class="fa-solid fa-newspaper text-sm sm:text-base my-auto mx-2"></i> -->
             <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Posts')}}</p>
         </x-jet-side-link>
-        <x-jet-side-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')">
-            <i class="fa-solid fa-quote-left text-sm sm:text-base my-auto mx-2"></i>
+        <x-jet-side-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')" class="my-2 h-14">
+            <i class="fa-solid fa-quote-left text-sm sm:text-xl my-auto mx-2"></i>
             <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Categories')}}</p>
         </x-jet-side-link>
-        <x-jet-side-link href="{{ route('admin.tags') }}" :active="request()->routeIs('admin.tags')">
-            <i class="fa-solid fa-tag text-sm sm:text-base my-auto mx-2"></i>
+        <x-jet-side-link href="{{ route('admin.tags') }}" :active="request()->routeIs('admin.tags')" class="my-2 h-14">
+            <i class="fa-solid fa-tag text-sm sm:text-xl my-auto mx-2"></i>
             <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Tags')}}</p>
         </x-jet-side-link>
-        <x-jet-side-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')">
-            <i class="fa-solid fa-users text-sm sm:text-base my-auto mx-2"></i>
+        <x-jet-side-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')" class="my-2 h-14">
+            <i class="fa-solid fa-users text-sm sm:text-xl my-auto mx-2"></i>
             <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Users')}}</p>
         </x-jet-side-link>
     </div>
@@ -47,17 +47,17 @@
     </a>
     <div class="mt-3 px-1">
         <x-jet-side-link href="{{ route('admin.posts') }}" :active="request()->routeIs('admin.posts')" class="my-2 h-14">
-            <i class="fa-solid fa-envelopes-bulk text-sm sm:text-lg my-auto mx-auto"></i>
+            <i class="fa-solid fa-envelopes-bulk text-sm sm:text-xl my-auto mx-auto"></i>
             <!-- <i class="fa-solid fa-newspaper text-sm sm:text-base my-auto mx-2"></i> -->
         </x-jet-side-link>
         <x-jet-side-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')" class="my-2 h-14">
-            <i class="fa-solid fa-quote-left text-sm sm:text-lg my-auto mx-auto"></i>
+            <i class="fa-solid fa-quote-left text-sm sm:text-xl my-auto mx-auto"></i>
         </x-jet-side-link>
         <x-jet-side-link href="{{ route('admin.tags') }}" :active="request()->routeIs('admin.tags')" class="my-2 h-14">
-            <i class="fa-solid fa-tag text-sm sm:text-lg my-auto mx-auto"></i>
+            <i class="fa-solid fa-tag text-sm sm:text-xl my-auto mx-auto"></i>
         </x-jet-side-link>
         <x-jet-side-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')" class="my-2 h-14">
-            <i class="fa-solid fa-users text-sm sm:text-lg my-auto mx-auto"></i>
+            <i class="fa-solid fa-users text-sm sm:text-xl my-auto mx-auto"></i>
         </x-jet-side-link>
     </div>
 </div>
