@@ -1,5 +1,5 @@
 <div class="w-full p-4" x-data="{showComment:false}">
-<div wire:loading class="fixed z-20 inset-0 place-content-center ">
+<div wire:loading wire:target="likeIt,unLikeIt" class="fixed z-20 inset-0 place-content-center">
     <div class="fixed justify-center h-full w-full opacity-25 bg-slate-300"> </div>
         <div class="flex justify-center my-72">
             <div class="my-48 dots">
@@ -19,7 +19,7 @@
         <i class="fa-regular fa-comment-dots mx-1 my-auto text-base cursor-pointer" @click="showComment =! showComment"></i> 
         <p class="mr-2 my-auto text-gray-500 text-sm cursor-pointer" @click="showComment =! showComment">Komentar</p>
     </div>
-    <div class="mb-4 flex flex-row py-2 pl-4 pr-6 rounded-3xl shadow border border-solid" x-show="showComment">
+    <div class="mb-4 flex flex-row py-2 pl-4 pr-6 rounded-3xl shadow border border-solid" x-show="showComment" wire:ignore>
         <input wire:model="komen" type="text" class="w-full focus:outline-none border-none" placeholder="Tambah Komentar">
         <i wire:click="sendComment([{{$post->id}}])" class="fa-solid fa-circle-chevron-right text-lg my-auto mx-auto cursor-pointer"></i>
     </div>

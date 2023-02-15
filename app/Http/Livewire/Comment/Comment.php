@@ -29,31 +29,34 @@ class Comment extends Component
     }
 
     public function sendComment($data){
+        dd($data);
         if($this->authid){
-            if(count($data) == 1){
-                $comment = Comments::create([
-                    'comment' => $this->komen,
-                    'post_id' => $data[0],
-                    'author_id' => $this->authid,
-                    'author_type' => $this->authtype,
-                ]);
-            }elseif(count($data) == 2){
-                $comment = Comments::create([
-                    'comment' => $this->komen,
-                    'post_id' => $data[0],
-                    'author_id' => $this->authid,
-                    'author_type' => $this->authtype,
-                    'parent_id' => $data[1],
-                ]);
-            }elseif(count($data) == 3){
-                $comment = Comments::create([
-                    'comment' => $this->komen,
-                    'post_id' => $data[0],
-                    'author_id' => $this->authid,
-                    'author_type' => $this->authtype,
-                    'parent_id' => $data[1],
-                    'parent2_id' => $data[2],
-                ]);
+            if($this->komen != null){
+                if(count($data) == 1){
+                    $comment = Comments::create([
+                        'comment' => $this->komen,
+                        'post_id' => $data[0],
+                        'author_id' => $this->authid,
+                        'author_type' => $this->authtype,
+                    ]);
+                }elseif(count($data) == 2){
+                    $comment = Comments::create([
+                        'comment' => $this->komen,
+                        'post_id' => $data[0],
+                        'author_id' => $this->authid,
+                        'author_type' => $this->authtype,
+                        'parent_id' => $data[1],
+                    ]);
+                }elseif(count($data) == 3){
+                    $comment = Comments::create([
+                        'comment' => $this->komen,
+                        'post_id' => $data[0],
+                        'author_id' => $this->authid,
+                        'author_type' => $this->authtype,
+                        'parent_id' => $data[1],
+                        'parent2_id' => $data[2],
+                    ]);
+                }
             }
             $this->resetComment();
         }else{
