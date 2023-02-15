@@ -1,5 +1,5 @@
 <div class="flex flex-col">
-    <div>
+    <div class="">
         @if($populers)
             <div class="shadow-sm mb-4">
                 <div class="flex flex-col">
@@ -38,7 +38,7 @@
             </div>
         @endif
     </div>
-    <div>
+    <div class="">
         @if($comments)
             <div class="border border-b shadow-sm mb-4">
                 <p class="py-2 px-1 border-b-4 bg-white border-solid border-b-blue-500 text-base sm:text-lg text-center">Komentar Terhangat</p>
@@ -59,7 +59,7 @@
             </div>
         @endif
     </div>
-    <div>
+    <div class="">
         @if(count($choices) > 0)
             <div class="shadow-sm mb-4">
                 <div class="flex flex-col">
