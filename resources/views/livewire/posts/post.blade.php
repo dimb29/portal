@@ -6,9 +6,9 @@
 
 <x-slot name="footer">
 </x-slot>
-<div class="pt-0 sm:pt-12">
+<div class="mt-20 max-w-6xl mx-auto">
     <div class="flex flex-col sm:flex-row">
-        <div class="w-full sm:w-3/4 sm:pl-8 sm:pr-4">
+        <div class="w-full sm:w-8/12 sm:pl-8 sm:pr-4">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 @if (session()->has('message'))
                     <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
@@ -118,7 +118,7 @@
                         });" x-ref="editordescription{{$post->id}}">
                         <p>{!! $post->content !!}</p>
                     </div>
-                    <div class="inline-flex">
+                    <div class="inline-flex" wire:loading wire:target="UnLikeIt,LikeIt">
                         <i wire:click="@if(count($post->like) > 0) UnLikeIt([{{$post->id}}]) @else LikeIt([{{$post->id}}]) @endif" 
                         class="@if(count($post->like) > 0) fa-solid @else fa-regular @endif fa-thumbs-up mx-1 my-auto cursor-pointer"></i>
                         <p wire:click="@if(count($post->like) > 0) UnLikeIt([{{$post->id}}]) @else LikeIt([{{$post->id}}]) @endif" 
@@ -139,7 +139,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-full sm:w-1/4 sm:pl-4 sm:pr-8 flex flex-col">
+        <div class="w-full sm:w-4/12 sm:pl-4 sm:pr-8 flex flex-col">
             <livewire:layouts.right-menu/>
         </div>
     </div>
