@@ -1,4 +1,11 @@
 <div class="w-full p-4" x-data="{showComment:false}">
+<div wire:loading class="fixed z-20 inset-0 place-content-center ">
+    <div class="fixed justify-center h-full w-full opacity-25 bg-slate-300"> </div>
+        <div class="flex justify-center my-72">
+            <div class="my-48 dots">
+            </div>
+        </div>
+</div>
     <div class="flex flex-row p-2">
         <!-- <i wire:click="@if(count($post->like) > 0) unLikeIt([{{$post->id}}]) @else likeIt([{{$post->id}}]) @endif" 
         class="@if(count($post->like) > 0) fa-solid @else fa-regular @endif fa-thumbs-up mx-1 my-auto cursor-pointer"></i>

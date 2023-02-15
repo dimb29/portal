@@ -7,6 +7,13 @@
 <x-slot name="footer">
 </x-slot>
 <div class="pt-0 sm:pt-12">
+<div wire:loading class="fixed z-20 inset-0 place-content-center ">
+    <div class="fixed justify-center h-full w-full opacity-25 bg-slate-300"> </div>
+        <div class="flex justify-center my-72">
+            <div class="my-48 dots">
+            </div>
+        </div>
+</div>
     <div class="flex flex-col sm:flex-row">
         <div class="w-full sm:w-3/4 sm:pl-8 sm:pr-4">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -144,7 +151,6 @@
         </div>
     </div>
 </div>
-
 
 <style>
     .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {

@@ -40,6 +40,8 @@
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
+        @livewireStyles
+        @livewireScripts
 
         @if(!isset($admin))
         <div class="min-h-screen bg-white">
@@ -116,6 +118,4 @@
 
         @stack('modals')
 
-        @livewireScripts
-    </body>
 </html>

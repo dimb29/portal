@@ -7,6 +7,7 @@ use App\Http\Livewire\Dashboard\Main;
 use App\Http\Livewire\Posts\Berita;
 
 use App\Http\Livewire\Posts\Posts;
+use App\Http\Livewire\Notif\NotifList;
 
 // use App\Http\Livewire\Search\SearchShow;
 
@@ -32,6 +33,7 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/posts', Posts::class)->name('posts');
+    Route::get('/notif', NotifList::class)->name('notif');
 });
 Route::get('/posts/{id}', p::class);
 Route::get('/cari/{data}', Berita::class)->name('cari');
