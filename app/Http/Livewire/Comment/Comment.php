@@ -29,7 +29,7 @@ class Comment extends Component
     }
 
     public function sendComment($data){
-        dd($data);
+        // dd($data);
         if($this->authid){
             if($this->komen != null){
                 if(count($data) == 1){
