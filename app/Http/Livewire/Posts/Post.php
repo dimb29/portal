@@ -19,7 +19,11 @@ class Post extends Component
     use WithFileUploads;
 
     public $isOpen = 0, $isSuccess = 0;
-    public $cv, $acv, $more_info, $post_id, $authid, $authtype;
+    public $cv, $acv, $more_info, $post_id, $authid, $authtype, $response_like;
+
+    protected $listeners = [
+        'responseLike',
+    ];
 
     public function mount($id)
     {
@@ -27,6 +31,10 @@ class Post extends Component
         //     $this->acv = Auth::user()->cv;
         // }
         $this->post_id = $id;
+    }
+
+    public function responseLike($bool){
+        $response_like = $bool;
     }
 
     public function render()
@@ -66,12 +74,16 @@ class Post extends Component
     }
 
     public function UnLikeIt($data){
-        $delete_like = Likes::where([
-            'post_id' => $data[0],
-            'user_id' => $this->authid,
-            'user_type' => $this->authtype,
-        ])->delete();
-        $this->emit('refreshMenu', 'true');
+        if($this->authid){
+            $delete_like = Likes::where([
+                'post_id' => $data[0],
+                'user_id' => $this->authid,
+                'user_type' => $this->authtype,
+            ])->delete();
+            $this->emit('refreshMenu', 'true');
+        }else{
+            return redirect('/login');
+        }
     }
 
     public function saveJob($id){

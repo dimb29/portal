@@ -111,18 +111,8 @@
                         </div>
                     </div>
                     
-                    <div id="content{{$post->id}}" class="text-gray-700 text-base m-auto mt-10" readonly="readonly" x-data
-                        x-init="
-                        ClassicEditor
-                        .create( $refs.editordescription{{$post->id}})
-                        .then(function(editor){
-                            const toolbarElement = editor.ui.view.toolbar.element;
-                            toolbarElement.style.display = 'none';
-                            editor.enableReadOnlyMode('content{{$post->id}}');
-                        })
-                        .catch( error => {
-                            console.error( error );
-                        });" x-ref="editordescription{{$post->id}}">
+                    <div wire:ignore id="content{{$post->id}}" class="p-3 text-gray-700 text-base m-auto mt-10" readonly="readonly" x-data
+                        >
                         <p>{!! $post->content !!}</p>
                     </div>
                     <div class="inline-flex">
