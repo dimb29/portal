@@ -6,7 +6,7 @@
 
 <x-slot name="footer">
 </x-slot>
-<div class="mt-20 max-w-6xl mx-auto">
+<div class="mt-12 sm:mt-20 max-w-6xl mx-auto">
 <div wire:loading class="fixed z-20 inset-0 place-content-center ">
     <div class="fixed justify-center h-full w-full opacity-25 bg-slate-300"> </div>
         <div class="flex justify-center my-72">
@@ -47,9 +47,9 @@
                         @endif
                     </div>
 
-                    <div class="hidden sm:flex flex-row" id="myHeader">
+                    <div class="">
 
-                        <div class="marginstick">
+                        <div class="">
                         
                             <div class="font-bold text-xl mb-2">
                                 {{$post->title}}
@@ -81,34 +81,6 @@
                             <div id="location" data-id="{{$post->location_id}}"></div>
                         </div>
 
-                    </div>
-
-
-                    <div class="flex-col sm:hidden">
-
-                        <div class="fixt">
-                        
-                            <div class="font-bold text-xl mb-2">
-                                {{$post->title}}
-                            </div>
-                            <h5 class="text-lg font-medium">
-                                @php
-                                $regens = $post->regency;
-                                for($i=0;$i < count($regens);$i++){
-                                if($i+1 == count($regens)){
-                                    echo ucwords(strtolower($regens[$i]->name));
-                                }else{
-                                    echo ucwords(strtolower($regens[$i]->name.", "));
-                                    }
-                                }
-                                @endphp
-                            </h5>
-                                <div class="flex flex-col sm:flex-row mb-4">
-                                    <p>by&nbsp;<span class="italic">{{ $post->author->first_name . ' ' . $post->author->last_name }}</span></p>
-                                    &nbsp;on&nbsp;{{ $post->updated_at->format('F, d Y') }}
-                                </div>
-                            <div id="location" data-id="{{$post->location_id}}"></div>
-                        </div>
                     </div>
                     
                     <div id="content{{$post->id}}" class="text-gray-700 text-base m-auto mt-10" readonly="readonly" x-data
