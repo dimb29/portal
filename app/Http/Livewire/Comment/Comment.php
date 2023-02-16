@@ -29,7 +29,6 @@ class Comment extends Component
     }
 
     public function sendComment($data){
-        // dd($data);
         if($this->authid){
             if($this->komen != null){
                 if(count($data) == 1){
@@ -66,6 +65,7 @@ class Comment extends Component
 
     public function likeIt($data){
         if($this->authid){
+            $this->emit('responseLike', true);
             if(count($data) > 1){
                 $post_id = $data[0];
                 $comment_id = $data[1];
@@ -89,6 +89,7 @@ class Comment extends Component
     }
 
     public function unLikeIt($data){
+        $this->emit('responseLike', true);
         if(count($data) > 1){
             $delete_like = Likes::where([
                 'comment_id' => $data[1],
