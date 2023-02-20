@@ -22,7 +22,7 @@ class RightMenu extends Component
         $choices = Post::take(10)->orderBy('updated_at', 'DESC')->where('verified', 1)->where('selected', 1)->get();
         $comments = Comment::withCount('like')
                             ->orderBy('like_count', 'desc')
-                            ->take(10)->get();
+                            ->take(4)->get();
         // dd($choices);
         return view('livewire.layouts.right-menu',[
             'populers' => $populers,
