@@ -8,6 +8,7 @@ use App\Models\Likes;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Comment extends Component
 {
@@ -38,6 +39,7 @@ class Comment extends Component
         return view('livewire.comment.comment', [
             'comments' => $mergekomen,
             'post' => $post,
+            'thistime' => $now,
         ]);
     }
 
