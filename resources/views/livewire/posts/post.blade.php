@@ -16,7 +16,7 @@
 </div>
     <div class="flex flex-col sm:flex-row">
         <div class="w-full sm:w-8/12 sm:pl-8 sm:pr-4">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white overflow-hidden sm:rounded-lg">
                 @if (session()->has('message'))
                     <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
                         role="alert">
@@ -38,13 +38,6 @@
                             <img class="h-40 sm:h-72" width="100%" src="{{ url('storage/photos/default_jobs.png') }}" alt="this is default">
                         @endif
                         </div>
-                    </div>
-                    <div>
-                        @if($post->author->profile_photo_path != null)
-                            <img class="h-15 sm:h-20 w-15 sm:w-20 rounded-lg object-contain my-4" src="{{ $post->author->profile_photo_url }}" alt="{{ $post->author->first_name . ' ' . $post->author->last_name }}" />
-                        @else
-                            <img class="h-15 sm:h-20 w-15 sm:w-20 rounded-lg object-contain" src="{{ url('storage/photos/default-logo.jpg') }}" alt="{{ $post->author->first_name . ' ' . $post->author->last_name }}" />
-                        @endif
                     </div>
 
                     <div class="">
@@ -87,17 +80,30 @@
                         >
                         <p>{!! $post->content !!}</p>
                     </div>
-                    <div class="inline-flex">
+                    <div class="inline-flex ml-3 mt-4 text-xl">
                         <i wire:click="@if(count($post->like) > 0) UnLikeIt([{{$post->id}}]) @else LikeIt([{{$post->id}}]) @endif" 
                         class="@if(count($post->like) > 0) fa-solid @else fa-regular @endif fa-thumbs-up mx-1 my-auto cursor-pointer"></i>
                         <p wire:click="@if(count($post->like) > 0) UnLikeIt([{{$post->id}}]) @else LikeIt([{{$post->id}}]) @endif" 
-                            class="mr-2 my-auto text-gray-500 text-sm cursor-pointer">
+                            class="mr-2 my-auto text-gray-500 text-sm cursor-pointer mt-1">
                             @if(count($post->like) > 0)
                                 {{count($post->like)}} 
                             @endif
                             Suka
                         </p>
                     </div>
+                    
+                    <div class="flex flex-row ml-3">
+                        <div class="mb-4">
+                            <input type="text" value="{{url('posts/'.$post->id)}}" id="myInput" class="invisible">
+                            <p class="mb-3 text-2xl"> 
+                                <ion-icon class="z-0 mr-3 mt-2" name="share-social-outline"></ion-icon>Bagikan
+                            </p>
+                            <button onclick="copyLink()" data-id="{{$post->id}}" class="mr-1 w-8 h-8 text-indigo-100 transition-colors p-1 duration-150 bg-indigo-700 rounded-full focus:shadow-outline hover:bg-indigo-800">
+                                <i class="fa-solid fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
             <div class="my-6">

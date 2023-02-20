@@ -8,6 +8,7 @@ use App\Models\Likes;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Comment extends Component
 {
@@ -15,6 +16,7 @@ class Comment extends Component
 
     public function render()
     {
+        $now = Carbon::now();
         if(Auth::user()){
             $authid = $this->authid = Auth::user()->id;
             $authtype = $this->authtype = 'user';
@@ -25,6 +27,7 @@ class Comment extends Component
         return view('livewire.comment.comment', [
             'comments' => $comments,
             'post' => $post,
+            'thistime' => $now,
         ]);
     }
 

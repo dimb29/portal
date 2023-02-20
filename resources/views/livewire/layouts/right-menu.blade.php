@@ -45,9 +45,9 @@
                 @foreach($comments as $comment)
                 <a href="{{url('posts/'.$comment->post->id)}}" class="flex flex-row bg-white sm:bg-gray-100 py-1 px-1">
                     @if($comment->author->profile_photo_url)
-                    <img src="{{url($comment->author->profile_photo_url)}}" alt="" class="my-auto w-10 sm:w-14 h-10 sm:h-14 rounded-3xl border border-solid">
+                    <img src="{{url($comment->author->profile_photo_url)}}" alt="" class="my-auto w-10 sm:w-14 h-10 sm:h-14 rounded-3xl border border-solid object-cover">
                     @else
-                    <img src="#" alt="" class="my-auto w-14 h-14 rounded-3xl border border-solid">
+                    <img src="#" alt="" class="my-auto w-14 h-14 rounded-3xl border border-solid object-cover">
                     @endif
                     <div class="px-1">
                         <p class="font-bold truncate text-base sm:text-base">{{$comment->author->name}}</p>
