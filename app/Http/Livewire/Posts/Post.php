@@ -19,7 +19,7 @@ class Post extends Component
     use WithFileUploads;
 
     public $isOpen = 0, $isSuccess = 0;
-    public $cv, $acv, $more_info, $post_id, $authid, $authtype, $response_like;
+    public $cv, $acv, $more_info, $post_id, $authid, $authtype, $response_like, $user_like;
 
     protected $listeners = [
         'responseLike',
@@ -50,6 +50,7 @@ class Post extends Component
         if(Auth::user()){
             $authid = $this->authid = Auth::user()->id;
             $authtype = $this->authtype = 'user';
+            $user_like = $this->user_like = Likes::where(['post_id' => $post->id, 'user_id' => $authid])->first();
         }
         $jobsave = PostModel::rightJoin('post_save', 'posts.id', 'post_save.post_id')->get();
         return view('livewire.posts.post', [

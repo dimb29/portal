@@ -50,9 +50,9 @@
                 </div>
                 <hr class="my-2">
                 <div class="flex flex-row p-2">
-                    <i wire:click="@if(count($comment->like) > 0) unLikeIt([{{$post->id}}, {{$comment->id}}]) @else likeIt([{{$post->id}}, {{$comment->id}}]) @endif" 
-                    class="@if(count($comment->like) > 0) fa-solid @else fa-regular @endif fa-thumbs-up text-sm mx-1 my-auto cursor-pointer"></i>
-                    <p wire:click="@if(count($comment->like) > 0) unLikeIt([{{$post->id}}, {{$comment->id}}]) @else likeIt([{{$post->id}}, {{$comment->id}}]) @endif" 
+                    <i wire:click="@if($comment->my_like) unLikeIt([{{$post->id}}, {{$comment->id}}]) @else likeIt([{{$post->id}}, {{$comment->id}}]) @endif" 
+                    class="@if($comment->my_like) fa-solid @else fa-regular @endif fa-thumbs-up text-sm mx-1 my-auto cursor-pointer"></i>
+                    <p wire:click="@if($comment->my_like) unLikeIt([{{$post->id}}, {{$comment->id}}]) @else likeIt([{{$post->id}}, {{$comment->id}}]) @endif" 
                         class="mr-2 my-auto text-gray-500 text-xs cursor-pointer">
                         @if(count($comment->like) > 0)
                             {{count($comment->like)}} 
@@ -83,9 +83,9 @@
                     <i wire:click="sendComment([{{$post->id}},{{$comment->id}}])" class="fa-solid fa-circle-chevron-right text-lg my-auto cursor-pointer"></i>
                 </div>
             </div>
-            @if(count($comment->child) != null)
+            @if(count($comment->childs) != null)
                 <div x-show="commentChild{{$comment->id}}">
-                    @foreach($comment->child as $child)
+                    @foreach($comment->childs as $child)
                         <div class="flex flex-row mt-2" x-data="{showComment{{$child->id}}:false}">
                             <div class="mr-2 min-w-20">
                             @if($child->author_type == 'user')
@@ -124,9 +124,9 @@
                                     </div>
                                     <hr class="my-2">
                                     <div class="flex flex-row p-2">
-                                        <i wire:click="@if(count($child->like) > 0) unLikeIt([{{$post->id}}, {{$child->id}}]) @else likeIt([{{$post->id}}, {{$child->id}}]) @endif" 
-                                        class="@if(count($child->like) > 0) fa-solid @else fa-regular @endif fa-thumbs-up text-sm mx-1 my-auto cursor-pointer"></i>
-                                        <p wire:click="@if(count($child->like) > 0) unLikeIt([{{$post->id}}, {{$child->id}}]) @else likeIt([{{$post->id}}, {{$child->id}}]) @endif" 
+                                        <i wire:click="@if($child->my_like) unLikeIt([{{$post->id}}, {{$child->id}}]) @else likeIt([{{$post->id}}, {{$child->id}}]) @endif" 
+                                        class="@if($child->my_like) fa-solid @else fa-regular @endif fa-thumbs-up text-sm mx-1 my-auto cursor-pointer"></i>
+                                        <p wire:click="@if($child->my_like) unLikeIt([{{$post->id}}, {{$child->id}}]) @else likeIt([{{$post->id}}, {{$child->id}}]) @endif" 
                                             class="mr-2 my-auto text-gray-500 text-xs cursor-pointer">
                                             @if(count($child->like) > 0)
                                                 {{count($child->like)}} 

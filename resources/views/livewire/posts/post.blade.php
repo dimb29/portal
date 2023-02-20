@@ -88,9 +88,9 @@
                         <p>{!! $post->content !!}</p>
                     </div>
                     <div class="inline-flex">
-                        <i wire:click="@if(count($post->like) > 0) UnLikeIt([{{$post->id}}]) @else LikeIt([{{$post->id}}]) @endif" 
-                        class="@if(count($post->like) > 0) fa-solid @else fa-regular @endif fa-thumbs-up mx-1 my-auto cursor-pointer"></i>
-                        <p wire:click="@if(count($post->like) > 0) UnLikeIt([{{$post->id}}]) @else LikeIt([{{$post->id}}]) @endif" 
+                        <i wire:click="@if($user_like) UnLikeIt([{{$post->id}}]) @else LikeIt([{{$post->id}}]) @endif" 
+                        class="@if($user_like) fa-solid @else fa-regular @endif fa-thumbs-up mx-1 my-auto cursor-pointer"></i>
+                        <p wire:click="@if($user_like) UnLikeIt([{{$post->id}}]) @else LikeIt([{{$post->id}}]) @endif" 
                             class="mr-2 my-auto text-gray-500 text-sm cursor-pointer">
                             @if(count($post->like) > 0)
                                 {{count($post->like)}} 

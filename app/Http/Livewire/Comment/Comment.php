@@ -15,15 +15,28 @@ class Comment extends Component
 
     public function render()
     {
+        $post = Post::where('id', $this->post_id)->first();
+        $comments = Comments::with(['child', 'like', 'author'])->where(['parent_id' => NULL, 'post_id' => $post->id])->get();
         if(Auth::user()){
             $authid = $this->authid = Auth::user()->id;
             $authtype = $this->authtype = 'user';
+            $mergekomen = [];
+            $mergechild = [];
+            foreach($comments as $key => $komen){
+                $user_like = Likes::where(['comment_id' => $komen->id, 'user_id' => $authid])->first();
+                $komen->setAttribute('my_like', $user_like);
+                $mergekomen []= $komen;
+                foreach($komen->child as $chlid){
+                    $child_like = Likes::where(['comment_id' => $chlid->id, 'user_id' => $authid])->first();
+                    $chlid->setAttribute('my_like', $child_like);
+                    $mergechild [] = $chlid;
+                }
+                $komen->setAttribute('childs', $mergechild);
+            }
         }
-        $post = Post::where('id', $this->post_id)->first();
-        $comments = Comments::with(['child', 'like', 'author'])->where(['parent_id' => NULL, 'post_id' => $post->id])->get();
         // dd($comments);
         return view('livewire.comment.comment', [
-            'comments' => $comments,
+            'comments' => $mergekomen,
             'post' => $post,
         ]);
     }
