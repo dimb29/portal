@@ -44,7 +44,7 @@
         @livewireScripts
 
         @if(!isset($admin))
-        <div class="min-h-screen bg-white">
+            <div class="min-h-screen bg-white">
                 @livewire('navigation-menu')
                 <!-- Page Heading -->
                 @if (isset($header))
@@ -55,12 +55,25 @@
                     </header>
                 @endif
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-            @else
-            <div class="inline-flex w-full h-full" x-data="{showSide:false}">
+                <!-- Page Content -->
+                <main>
+                    {{ $slot }}
+                </main>
+            </div>
+        @else
+            @php
+                if(request()->routeIs('admin.filter.*')):
+                    $openfilter = true;
+                else:
+                    $openfilter = false;
+                endif;
+                if(request()->routeIs('admin.notif.*')):
+                    $opennotif = true;
+                else:
+                    $opennotif = false;
+                endif;
+            @endphp
+            <div class="inline-flex w-full h-full" x-data="{showSide:false, openFilter:@js($openfilter), openNotif:@js($opennotif)}">
                 @livewire('admin.layouts.side-menu')
                 <div class="w-screen min-h-screen bg-white">
                     @livewire('admin.layouts.navigation-menu')
@@ -80,8 +93,7 @@
                     </main>
                 </div>
             </div>
-            @endif
-        </div>
+        @endif
 
         @if (isset($footer))
         <div class="border-t-4 py-8 bg-black border-blue-500">

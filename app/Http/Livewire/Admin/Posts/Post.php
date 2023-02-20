@@ -22,7 +22,7 @@ class Post extends Component
     use WithPagination;
     use WithFileUploads;
 
-    public $title, $content, $post_id, $views, $tag, $tags, $search_tag, $category, $categories, $verify;
+    public $title, $content, $post_id, $views, $tag, $tags, $search_tag, $category, $categories, $verify, $desc_verif;
     public $location,$location_district,$location_regency, $inloc, $listloc, $showloc, $getdataloc;
     public $jenkeres = array(), $kualifes = array(), $pengkerjases = array();
     public $spesialisess = array(), $tingkeres = array(),$regencies = array();
@@ -295,8 +295,10 @@ class Post extends Component
         $post = Posts::where('id', $this->post_id)->update([
             'verified' => $this->verify,
         ]);
-        if($this->verify == 1): $message = 'Post has been verifed'; 
-        else: $message = 'Post has been canceled'; 
+        if($this->verify == 1): 
+            $message = 'Post has been verified'; 
+        else: 
+            $message = 'Post has been canceled'; 
         endif;
         session()->flash('message',$message);
         $this->closeVerify();

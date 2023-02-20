@@ -47,7 +47,7 @@
                 </div>
                 <i class="fa-solid fa-quote-left font-black text-6xl text-right w-1/2 opacity-25"></i>
             </div>
-            <a href="{{route('admin.categories')}}" class="absolute w-full bottom-0 left-0 right-0 h-10 bg-gray-900 opacity-25 hover:bg-gray-800 cursor-pointer">
+            <a href="{{route('admin.filter.categories')}}" class="absolute w-full bottom-0 left-0 right-0 h-10 bg-gray-900 opacity-25 hover:bg-gray-800 cursor-pointer">
                 <div class="w-full h-full inline-flex justify-center">
                     <p class="my-auto mx-0.5">more</p>
                     <i class="fa-solid fa-arrow-right my-auto mx-0.5"></i>
@@ -62,7 +62,7 @@
                 </div>
                 <i class="fa-solid fa-tag font-black text-6xl text-right w-1/2 opacity-25"></i>
             </div>
-            <a href="{{route('admin.tags')}}" class="absolute w-full bottom-0 left-0 right-0 h-10 bg-gray-900 opacity-25 hover:bg-gray-800 cursor-pointer">
+            <a href="{{route('admin.filter.tags')}}" class="absolute w-full bottom-0 left-0 right-0 h-10 bg-gray-900 opacity-25 hover:bg-gray-800 cursor-pointer">
                 <div class="w-full h-full inline-flex justify-center">
                     <p class="my-auto mx-0.5">more</p>
                     <i class="fa-solid fa-arrow-right my-auto mx-0.5"></i>

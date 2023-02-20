@@ -20,6 +20,10 @@
                             <option value="2">Tolak</option>
                         </select>
                     </div>
+                    <div class="mb-4">
+                        <textarea name="desc_verif" id="desc_verif" wire:model="desc_verif" cols="30" rows="10"
+                            class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                    </div>
                 </div>
 
                 <div class="flex flex-row sm:px-6 sm:flex sm:flex-row-reverse">

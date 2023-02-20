@@ -23,14 +23,22 @@ use App\Http\Livewire\Admin\Posts\Post as AdminPost;
 use App\Http\Livewire\Admin\Filters\Tag as AdminTag;
 use App\Http\Livewire\Admin\Filters\Category as AdminCategory;
 use App\Http\Livewire\Admin\Users\User as AdminUser;
+use App\Http\Livewire\Admin\Notif\Notification as AdminNotif;
+use App\Http\Livewire\Admin\Notif\NotifTemplate as AdminNotifTemplate;
 
 // Route::get('admin/{id}', AdminMain::class)->name('admin.profile.info');
 Route::prefix('admin')->name('admin.')->group(function(){
     Route::group(['middleware' => ['auth:web', 'verified', 'isadmin']], function () {
         route::get('/', AdminMain::class)->name('dashboard');
         route::get('/posts', AdminPost::class)->name('posts');
-        route::get('/tags', AdminTag::class)->name('tags');
-        route::get('/categories', AdminCategory::class)->name('categories');
+        Route::prefix('filter')->name('filter.')->group(function(){
+            route::get('/tags', AdminTag::class)->name('tags');
+            route::get('/categories', AdminCategory::class)->name('categories');
+        });
+        Route::prefix('notif')->name('notif.')->group(function(){
+            route::get('/', AdminNotif::class)->name('notif');
+            route::get('/templates', AdminNotifTemplate::class)->name('templates');
+        });
         route::get('/users', AdminUser::class)->name('users');
     });
 

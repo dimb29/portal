@@ -23,11 +23,15 @@ class Notification extends Model
         return $this->belongsTo(Post::class);
     }
 
-    public function from(){
+    public function userFrom(){
         return $this->belongsTo(User::class, 'from', 'id');
     }
 
-    public function to(){
+    public function userTo(){
         return $this->belongsTo(User::class, 'to', 'id');
+    }
+
+    public function template(){
+        return $this->belongsTo(NotifTemplate::class, 'type', 'id');
     }
 }

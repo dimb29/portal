@@ -17,18 +17,37 @@
     </a>
     <div class="mt-3 px-1">
         <x-jet-side-link href="{{ route('admin.posts') }}" :active="request()->routeIs('admin.posts')" class="my-2 h-14">
-            <i class="fa-solid fa-envelopes-bulk text-sm sm:text-xl my-auto mx-2"></i>
-            <!-- <i class="fa-solid fa-newspaper text-sm sm:text-base my-auto mx-2"></i> -->
+            <i class="fa-solid fa-newspaper text-sm sm:text-base my-auto mx-2"></i>
             <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Posts')}}</p>
         </x-jet-side-link>
-        <x-jet-side-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')" class="my-2 h-14">
-            <i class="fa-solid fa-quote-left text-sm sm:text-xl my-auto mx-2"></i>
-            <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Categories')}}</p>
+        <x-jet-side-link @click="openFilter = !openFilter" :active="request()->routeIs('admin.filter.*')" class="mt-2 mb-1 h-14">
+            <i class="fa-solid fa-filter text-sm sm:text-xl my-auto mx-2"></i>
+            <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Filters')}}</p>
         </x-jet-side-link>
-        <x-jet-side-link href="{{ route('admin.tags') }}" :active="request()->routeIs('admin.tags')" class="my-2 h-14">
-            <i class="fa-solid fa-tag text-sm sm:text-xl my-auto mx-2"></i>
-            <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Tags')}}</p>
+        <div class="flex flex-col ml-2 mb-2" x-show="openFilter">
+            <x-jet-side-link tags="child" href="{{ route('admin.filter.categories') }}" :active="request()->routeIs('admin.filter.categories')" class="my-0.5 h-10">
+                <i class="fa-solid fa-quote-left text-sm sm:text-xl my-auto mx-2"></i>
+                <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Categories')}}</p>
+            </x-jet-side-link>
+            <x-jet-side-link tags="child" href="{{ route('admin.filter.tags') }}" :active="request()->routeIs('admin.filter.tags')" class="my-0.5 h-10">
+                <i class="fa-solid fa-tag text-sm sm:text-xl my-auto mx-2"></i>
+                <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Tags')}}</p>
+            </x-jet-side-link>
+        </div>
+        <x-jet-side-link @click="openNotif = !openNotif" :active="request()->routeIs('admin.notif.*')" class="mt-2 mb-1 h-14">
+            <i class="fa-solid fa-envelopes-bulk text-sm sm:text-xl my-auto mx-2"></i>
+            <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Notifications')}}</p>
         </x-jet-side-link>
+        <div class="flex flex-col ml-2 mb-2" x-show="openNotif">
+            <x-jet-side-link tags="child" href="{{ route('admin.notif.notif') }}" :active="request()->routeIs('admin.notif.notif')" class="my-0.5 h-10">
+                <i class="fa-solid fa-envelope text-sm sm:text-xl my-auto mx-2"></i>
+                <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Notification')}}</p>
+            </x-jet-side-link>
+            <x-jet-side-link tags="child" href="{{ route('admin.notif.templates') }}" :active="request()->routeIs('admin.notif.templates')" class="my-0.5 h-10">
+                <i class="fa-solid fa-file text-sm sm:text-xl my-auto mx-2"></i>
+                <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Template Notif')}}</p>
+            </x-jet-side-link>
+        </div>
         <x-jet-side-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')" class="my-2 h-14">
             <i class="fa-solid fa-users text-sm sm:text-xl my-auto mx-2"></i>
             <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Users')}}</p>
@@ -47,15 +66,30 @@
     </a>
     <div class="mt-3 px-1">
         <x-jet-side-link href="{{ route('admin.posts') }}" :active="request()->routeIs('admin.posts')" class="my-2 h-14">
+            <i class="fa-solid fa-newspaper text-sm sm:text-base my-auto mx-auto"></i>
+        </x-jet-side-link>
+        <x-jet-side-link @click="openFilter = !openFilter" :active="request()->routeIs('admin.filter.*')" class="mt-2 mb-1 h-14">
+            <i class="fa-solid fa-filter text-sm sm:text-xl my-auto mx-auto"></i>
+        </x-jet-side-link>
+        <div class="flex flex-col ml-1 mb-2" x-show="openFilter">
+            <x-jet-side-link tags="child" href="{{ route('admin.filter.categories') }}" :active="request()->routeIs('admin.filter.categories')" class="my-0.5 h-10">
+                <i class="fa-solid fa-quote-left text-sm sm:text-xl my-auto mx-auto"></i>
+            </x-jet-side-link>
+            <x-jet-side-link tags="child" href="{{ route('admin.filter.tags') }}" :active="request()->routeIs('admin.filter.tags')" class="my-0.5 h-10">
+                <i class="fa-solid fa-tag text-sm sm:text-xl my-auto mx-auto"></i>
+            </x-jet-side-link>
+        </div>
+        <x-jet-side-link @click="openNotif = !openNotif" :active="request()->routeIs('admin.notif.*')" class="mt-2 mb-1 h-14">
             <i class="fa-solid fa-envelopes-bulk text-sm sm:text-xl my-auto mx-auto"></i>
-            <!-- <i class="fa-solid fa-newspaper text-sm sm:text-base my-auto mx-2"></i> -->
         </x-jet-side-link>
-        <x-jet-side-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')" class="my-2 h-14">
-            <i class="fa-solid fa-quote-left text-sm sm:text-xl my-auto mx-auto"></i>
-        </x-jet-side-link>
-        <x-jet-side-link href="{{ route('admin.tags') }}" :active="request()->routeIs('admin.tags')" class="my-2 h-14">
-            <i class="fa-solid fa-tag text-sm sm:text-xl my-auto mx-auto"></i>
-        </x-jet-side-link>
+        <div class="flex flex-col ml-1 mb-2" x-show="openNotif">
+            <x-jet-side-link tags="child" href="{{ route('admin.notif.notif') }}" :active="request()->routeIs('admin.notif.notif')" class="my-0.5 h-10">
+                <i class="fa-solid fa-envelope text-sm sm:text-xl my-auto mx-auto"></i>
+            </x-jet-side-link>
+            <x-jet-side-link tags="child" href="{{ route('admin.notif.templates') }}" :active="request()->routeIs('admin.notif.templates')" class="my-0.5 h-10">
+                <i class="fa-solid fa-file text-sm sm:text-xl my-auto mx-auto"></i>
+            </x-jet-side-link>
+        </div>
         <x-jet-side-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')" class="my-2 h-14">
             <i class="fa-solid fa-users text-sm sm:text-xl my-auto mx-auto"></i>
         </x-jet-side-link>

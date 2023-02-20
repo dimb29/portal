@@ -5,7 +5,7 @@
     <p class="w-full m-0.5 text-right">
         <a href="{{route('admin.dashboard')}}" class="hover:text-cyan-500 hover:underline">Admin</a>
         /
-        <a href="{{route('admin.tags')}}" class="hover:text-cyan-500 hover:underline">Tag</a>
+        <a href="{{route('admin.filter.tags')}}" class="hover:text-cyan-500 hover:underline">Tag</a>
     </p>
 </x-slot>
 <div class="w-full px-1 sm:px-8 py-1 sm:py-4">
