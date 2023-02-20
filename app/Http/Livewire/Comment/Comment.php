@@ -16,6 +16,7 @@ class Comment extends Component
 
     public function render()
     {
+        $now = Carbon::now();
         $post = Post::where('id', $this->post_id)->first();
         $comments = Comments::with(['child', 'like', 'author'])->where(['parent_id' => NULL, 'post_id' => $post->id])->get();
         if(Auth::user()){
