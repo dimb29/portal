@@ -12,7 +12,7 @@
     </a>
     <a href="{{ route('admin.profile.show') }}"
         class="flex flex-row mx-2 py-3 text-gray-300 hover:text-gray-400 border-b border-solid border-gray-700 cursor-pointer">
-        <img src="{{url(Auth::user()->profile_photo_url)}}" alt="poto-user" class="block bg-gray-300 rounded-full h-7 w-auto mx-0.5 my-auto" />
+        <img src="{{url(Auth::user()->profile_photo_url)}}" alt="poto-user" class="block bg-gray-300 rounded-full h-7 w-7 w-auto mx-0.5 my-auto" />
         <p class="text-sm sm:text-base font-semibold mx-0.5 my-auto">{{Auth::user()->name}}</p>
     </a>
     <div class="mt-3 px-1">
@@ -62,7 +62,7 @@
     </a>
     <a href="{{ route('admin.profile.show') }}"
         class="flex flex-row mx-2 py-3 justify-center text-gray-300 hover:text-gray-400 border-b border-solid border-gray-700 cursor-pointer">
-        <img src="{{url(Auth::user()->profile_photo_url)}}" alt="poto-user" class="block bg-gray-300 rounded-full h-7 mx-auto my-auto" />
+        <img src="{{url(Auth::user()->profile_photo_url)}}" alt="poto-user" class="block bg-gray-300 rounded-full h-7 w-7 object-cover mx-auto my-auto" />
     </a>
     <div class="mt-3 px-1">
         <x-jet-side-link href="{{ route('admin.posts') }}" :active="request()->routeIs('admin.posts')" class="my-2 h-14">

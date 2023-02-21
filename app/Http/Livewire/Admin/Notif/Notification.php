@@ -6,11 +6,13 @@ use Livewire\Component;
 use App\Models\Notification as Notif;
 use App\Models\NotifTemplate as NotifTemp;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Notification extends Component
 {
     
-    public $search, $short, $isOpen, $notif_id, $title, $desc, $isNotif = true, $user, $users, $listuser, $inuser, $type;
+    public $search, $short, $isOpen, $isShow, $notif_id, $title, $desc, $isNotif = true, $user, $users, $listuser, $inuser, $type;
     protected $listeners = [
         'multiUser',
     ];
@@ -75,6 +77,7 @@ class Notification extends Component
                         'desc' => $this->desc,
                         'type' => $this->type,
                         'to' => $user,
+                        'from' => Auth::user()->id,
                     ]);
                 }
             }
@@ -84,6 +87,7 @@ class Notification extends Component
                 'desc' => $this->desc,
                 'type' => $this->type,
                 'to' => null,
+                'from' => Auth::user()->id,
             ]);
         }
 
@@ -98,8 +102,9 @@ class Notification extends Component
         $this->notif_id = $notif->id;
         $this->title = $notif->title;
         $this->desc = $notif->desc;
-        $this->openModal();
+        $this->showModal();
         $this->users = $notif->userTo;
+        $this->from = $notif->userFrom;
         $this->type = $notif->template->id;
     }
     public function delete($id){
@@ -108,8 +113,14 @@ class Notification extends Component
     public function openModal(){
         $this->isOpen = true;
     }
+
+    public function showModal(){
+        $this->isShow = true;
+    }
+
     public function closeModal(){
         $this->isOpen = false;
+        $this->isShow = false;
         $this->resetInputField();
     }
     public function resetInputField(){
