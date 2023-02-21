@@ -114,9 +114,6 @@ class JetstreamServiceProvider extends ServiceProvider
             $this->registerComponent('confirmation-modal');
             $this->registerComponent('confirms-password');
             $this->registerComponent('danger-button');
-            $this->registerComponent('daterange-picker');
-            $this->registerComponent('datetime-picker');
-            $this->registerComponent('delete-button');
             $this->registerComponent('dialog-modal');
             $this->registerComponent('dropdown');
             $this->registerComponent('dropdown-link');
@@ -132,9 +129,6 @@ class JetstreamServiceProvider extends ServiceProvider
             $this->registerComponent('secondary-button');
             $this->registerComponent('section-border');
             $this->registerComponent('section-title');
-            $this->registerComponent('select2');
-            $this->registerComponent('side-link');
-            $this->registerComponent('side-mini-link');
             $this->registerComponent('switchable-team');
             $this->registerComponent('validation-errors');
             $this->registerComponent('welcome');
