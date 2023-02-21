@@ -89,7 +89,7 @@
                                 {{count($post->like)}} 
                             @endif
                             Suka
-                        </p>
+                        </p> 
                     </div>
                     
                     <div class="flex flex-row ml-3">

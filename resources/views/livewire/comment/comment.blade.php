@@ -20,7 +20,7 @@
             <input wire:model="komen" type="text" class="w-full h-12 focus:outline-none border-none" placeholder="Tulis Komentar">
             <i wire:click="sendComment([{{$post->id}}])" class="fa-solid fa-circle-chevron-right text-lg my-auto mx-auto cursor-pointer"></i>
         </div>
-    </div>
+    </div> 
     @if($comments)
     <hr class="my-2">
     @foreach($comments as $comment)
