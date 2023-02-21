@@ -57,7 +57,7 @@ class Post extends Component
         'post' => $post,
         'simpan_job' => $jobsave,
     ]);
-    }
+    } 
 
     public function LikeIt($data){
         if($this->authid){

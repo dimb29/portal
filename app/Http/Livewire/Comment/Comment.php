@@ -35,7 +35,7 @@ class Comment extends Component
                 }
                 $komen->setAttribute('childs', $mergechild);
             }
-        }
+        } 
         // dd($comments);
         return view('livewire.comment.comment', [
             'comments' => $mergekomen,
