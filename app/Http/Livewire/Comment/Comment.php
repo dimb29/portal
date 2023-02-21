@@ -33,9 +33,11 @@ class Comment extends Component
                     $chlid->setAttribute('my_like', $child_like);
                     $mergechild [] = $chlid;
                 }
-                $komen->setAttribute('childs', $mergechild);
+                $komen->setAttribute('child', $mergechild);
             }
-        } 
+        }else{
+            $mergekomen = $comments;
+        }
         // dd($comments);
         return view('livewire.comment.comment', [
             'comments' => $mergekomen,
