@@ -108,7 +108,7 @@
                     <i wire:click="sendComment([{{$post->id}},{{$comment->id}}])" class="fa-solid fa-circle-chevron-right text-lg my-auto cursor-pointer"></i>
                 </div>
             </div>
-            @if(count($comment->childs) != null)
+            @if(count($comment->child) != null)
                 <div x-show="commentChild{{$comment->id}}">
                     @foreach($comment->child as $child)
                         <div class="flex flex-row mt-4" x-data="{showComment{{$child->id}}:false}">
