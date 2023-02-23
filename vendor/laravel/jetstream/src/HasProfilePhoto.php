@@ -17,16 +17,26 @@ trait HasProfilePhoto
      */
     public function updateProfilePhoto(UploadedFile $photo)
     {
-        tap($this->profile_photo_path, function ($previous) use ($photo) {
-            $this->forceFill([
-                'profile_photo_path' => $photo->storePublicly(
-                    'profile-photos', ['disk' => $this->profilePhotoDisk()]
-                ),
-            ])->save();
+        // tap($this->profile_photo_path, function ($previous) use ($photo) {
+        //     $this->forceFill([
+        //         'profile_photo_path' => $photo->storePublicly(
+        //             'profile-photos', ['disk' => $this->profilePhotoDisk()]
+        //         ),
+        //     ])->save();
 
-            if ($previous) {
-                Storage::disk($this->profilePhotoDisk())->delete($previous);
+        //     if ($previous) {
+        //         Storage::disk($this->profilePhotoDisk())->delete($previous);
+        //     }
+        // });
+        tap($this->profile_photo_path, function ($previous) use ($photo) {
+            // dd($previous);
+            if ($previous != null) {
+                Storage::disk('public_uploads')->delete($previous);
             }
+            
+            $this->forceFill([
+                'profile_photo_path' => Storage::disk('public_uploads')->put('profile-photos', $photo),
+            ])->save();
         });
     }
 
@@ -45,8 +55,12 @@ trait HasProfilePhoto
             return;
         }
 
-        Storage::disk($this->profilePhotoDisk())->delete($this->profile_photo_path);
+        // Storage::disk($this->profilePhotoDisk())->delete($this->profile_photo_path);
 
+        // $this->forceFill([
+        //     'profile_photo_path' => null,
+        // ])->save();
+        Storage::disk('public_uploads')->delete($this->profile_photo_path);
         $this->forceFill([
             'profile_photo_path' => null,
         ])->save();
@@ -59,8 +73,12 @@ trait HasProfilePhoto
      */
     public function getProfilePhotoUrlAttribute()
     {
+        // return $this->profile_photo_path
+        //             ? Storage::disk($this->profilePhotoDisk())->url($this->profile_photo_path)
+        //             : $this->defaultProfilePhotoUrl();
+        // dd($this->profile_photo_path);
         return $this->profile_photo_path
-                    ? Storage::disk($this->profilePhotoDisk())->url($this->profile_photo_path)
+                    ? url($this->profile_photo_path)
                     : $this->defaultProfilePhotoUrl();
     }
 

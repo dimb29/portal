@@ -28,42 +28,11 @@
             role="dialog" aria-modal="true" aria-labelledby="modal-headline" @click.away="$wire.closeModal()">
             <form>
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    @if(!$isNotif)
-                    <div class="mb-4">
-                        <label for="name_tag">Name Tag :</label>
-                        <x-jet-input type="text" wire:model="name_tag" name="name_tag" id="name_tag" 
-                        class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline" />
-                    </div>
-                    @endif
-                    <div class="mb-4">
-                        <label for="title">Judul :</label>
-                        <x-jet-input type="text" wire:model="title" name="title" id="title" 
-                        class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline" />
-                    </div>
-                    <div class="mb-4" wire:ignore>
-                        <label for="desc">Keterangan :</label>
-                        <textarea name="desc" id="desc" wire:model="desc" cols="30" rows="10"
-                            class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline" x-data 
-                            x-init="
-                            ClassicEditor
-                            .create( $refs.editordescription)
-                            .then(function(editor){
-                                
-                                editor.model.document.on('change:data', () => {
-                                    @this.set('desc', editor.getData())
-                                    
-                                })
-                                
-                            })
-                            .catch( error => {
-                                console.error( error );
-                            } );" x-ref="editordescription"></textarea>
-                    </div>
                     @if($isNotif)
-                    <div class="flex flex-row mb-4 gap-4">
+                    <div class="flex flex-row mb-2 gap-4">
                         <div class="w-1/2">
                             <label for="type">Tipe Notif</label>
-                            <select name="type" id="type" wire:model="type" 
+                            <select name="type" id="type" wire:click="changeType($event.target.value)"
                                 class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
                                 <option value="">Pilih tipe</option>
                                 @if($types)
@@ -114,6 +83,51 @@
                                 @endif
                             </div>
                             <p class="text-gray-500">nb. kosongkan tujuan jika ingin mengirim ke semua user</p>
+                        </div>
+                    </div>
+                    @endif
+                    @if(!$isNotif)
+                    <div class="mb-4">
+                        <label for="name_tag">Name Tag :</label>
+                        <x-jet-input type="text" wire:model="name_tag" name="name_tag" id="name_tag" 
+                        class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline" />
+                    </div>
+                    @endif
+                    <div class="mb-4">
+                        <label for="title">Judul :</label>
+                    @if($descOn)
+                        <x-jet-input type="text" wire:model="title" name="title" id="title" readonly
+                        class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline" />
+                    @else
+                        <x-jet-input type="text" wire:model="title" name="title" id="title" 
+                        class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline" />
+                    @endif
+                    </div>
+                    @if($descOn)
+                    <label for="desc">Keterangan :</label>
+                    <div class="mb-4 shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
+                        {!! $desc !!}
+                    </div>
+                    @else
+                    <div class="mb-4">
+                        <div wire:ignore>
+                            <label for="desc">Keterangan :</label>
+                            <textarea name="desc" id="desc" wire:model="desc" cols="30" rows="10"
+                                class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline" x-data 
+                                x-init="
+                                ClassicEditor
+                                .create( $refs.editordescription)
+                                .then(function(editor){
+                                    
+                                    editor.model.document.on('change:data', () => {
+                                        @this.set('desc', editor.getData())
+                                        
+                                    })
+                                    
+                                })
+                                .catch( error => {
+                                    console.error( error );
+                                } );" x-ref="editordescription"></textarea>
                         </div>
                     </div>
                     @endif

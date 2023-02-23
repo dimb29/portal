@@ -14,16 +14,50 @@
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="mb-4">
                         <label for="verify">Pilih Tindakan :</label>
-                        <select wire:model="verify" name="verify" id="verify" 
+                        <select name="verify" id="verify" wire:click="changeType($event.target.value)"
                             class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
-                            <option value="1">Setujui</option>
-                            <option value="2">Tolak</option>
+                            <option value="">Pilih tindakan</option>
+                            @if($types)
+                                @foreach($types as $type)
+                                <option value="{{$type->id}}">{{$type->name_tag}}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
-                    <div class="mb-4">
-                        <textarea name="desc_verif" id="desc_verif" wire:model="desc_verif" cols="30" rows="10"
-                            class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                    <div class="inline-flex">
+                        <input type="checkbox" wire:model="descOn" wire:click="isDefault($event.target.value)" class="mr-2">
+                        gunakan default?
                     </div>
+                    @if($descOn)
+                    <div>
+                        <label for="desc">Keterangan :</label>
+                        <div class="mb-4 shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
+                            {!! $desc !!}
+                        </div>
+                    </div>
+                    @else
+                    <div class="mb-4">
+                        <div wire:ignore>
+                            <label for="desc">Keterangan :</label>
+                            <textarea name="desc" id="desc" wire:model="desc" cols="30" rows="10"
+                                class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline" x-data 
+                                x-init="
+                                ClassicEditor
+                                .create( $refs.editordescription)
+                                .then(function(editor){
+                                    
+                                    editor.model.document.on('change:data', () => {
+                                        @this.set('desc', editor.getData())
+                                        
+                                    })
+                                    
+                                })
+                                .catch( error => {
+                                    console.error( error );
+                                } );" x-ref="editordescription"></textarea>
+                        </div>
+                    </div>
+                    @endif
                 </div>
 
                 <div class="flex flex-row sm:px-6 sm:flex sm:flex-row-reverse">

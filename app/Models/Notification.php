@@ -34,4 +34,8 @@ class Notification extends Model
     public function template(){
         return $this->belongsTo(NotifTemplate::class, 'type', 'id');
     }
+
+    public function readIt(){
+        return $this->hasMany(NotifRead::class, 'notif_id', 'id');
+    }
 }

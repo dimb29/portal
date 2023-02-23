@@ -8,6 +8,8 @@ use App\Models\Regency;
 use App\Models\District;
 use App\Models\Tag;
 use App\Models\Category;
+use App\Models\Notification as Notif;
+use App\Models\NotifTemplate as NotifTemp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -22,14 +24,14 @@ class Post extends Component
     use WithPagination;
     use WithFileUploads;
 
-    public $title, $content, $post_id, $views, $tag, $tags, $search_tag, $category, $categories, $verify, $desc_verif;
+    public $author, $title, $content, $post_id, $views, $tag, $tags, $search_tag, $category, $categories, $verify, $desc_verif;
     public $location,$location_district,$location_regency, $inloc, $listloc, $showloc, $getdataloc;
     public $jenkeres = array(), $kualifes = array(), $pengkerjases = array();
     public $spesialisess = array(), $tingkeres = array(),$regencies = array();
     public $multitle = array(),$multitles = array(),$Multiloc = array();
     public $photos = [], $countpost;
     public $isOpen = 0,$isVerify = 0;
-    public $locinput, $search, $short, $filter_verif;
+    public $locinput, $search, $short, $filter_verif, $desc, $descOn = false;
     protected $listeners = [
         'multiLoc',
         'dataFillArray',
@@ -105,9 +107,11 @@ class Post extends Component
             }
         }
         $posts = $posts->paginate(20);
+        $types = NotifTemp::all();
 
         return view('livewire.admin.posts.post', [
             "posts" => $posts,
+            'types' => $types,
         ]);
     }
 
@@ -287,14 +291,44 @@ class Post extends Component
         // session()->flash('listlocs', 'cekcekcek');
         // dd($this->listloc);
     }
+    public function changeType($value){
+        $this->verify = $value;
+        if($value){
+            $get_temp = NotifTemp::find($value);
+            $this->title = $get_temp->title;
+            $this->desc = $get_temp->desc;
+        }else{
+            $this->title = null;
+            $this->desc = null;
+        }
+    }
+    public function isDefault($value){
+        if($this->descOn){
+            $this->descOn = true;
+            $this->changeType($this->verify);
+        }else{
+            $this->descOn = false;
+            $get_temp = NotifTemp::find($this->verify);
+            $this->title = $get_temp->name_tag;
+            $this->desc = null;
+        }
+    }
     public function verifyStore()
     {
-        $this->validate([
-            'verify' => 'required',
-        ]);
-        $post = Posts::where('id', $this->post_id)->update([
-            'verified' => $this->verify,
-        ]);
+        if($this->verify){
+            $post = Posts::where('id', $this->post_id)->update([
+                'verified' => $this->verify,
+            ]);
+            $notif_id = null;
+            $notif = Notif::updateOrCreate(['id' => $notif_id], [
+                'title' => $this->title,
+                'desc' => $this->desc,
+                'type' => $this->verify,
+                'to' => $this->author->id,
+                'from' => Auth::user()->id,
+                'post_id' => $this->post_id,
+            ]);
+        }
         if($this->verify == 1): 
             $message = 'Post has been verified'; 
         else: 
@@ -307,6 +341,7 @@ class Post extends Component
         $verify = Posts::find($id);
         $this->post_id = $id;
         $this->verify = $verify->verified;
+        $this->author = $verify->author;
         $this->openVerify();
     }
 

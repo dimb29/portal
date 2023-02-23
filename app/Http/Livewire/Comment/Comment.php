@@ -28,10 +28,14 @@ class Comment extends Component
                 $user_like = Likes::where(['comment_id' => $komen->id, 'user_id' => $authid])->first();
                 $komen->setAttribute('my_like', $user_like);
                 $mergekomen []= $komen;
-                foreach($komen->child as $chlid){
-                    $child_like = Likes::where(['comment_id' => $chlid->id, 'user_id' => $authid])->first();
-                    $chlid->setAttribute('my_like', $child_like);
-                    $mergechild [] = $chlid;
+                if(count($komen->child) > 0){
+                    foreach($komen->child as $chlid){
+                        $child_like = Likes::where(['comment_id' => $chlid->id, 'user_id' => $authid])->first();
+                        $chlid->setAttribute('my_like', $child_like);
+                        $mergechild [] = $chlid;
+                    }
+                }else{
+                    $mergechild = [];
                 }
                 $komen->setAttribute('child', $mergechild);
             }

@@ -51,7 +51,7 @@
                     <td class="text-center border border-slate-300">{{$notif->id}}</td>
                     <td class="border border-slate-300 px-1 truncate">{{$notif->title}}</td>
                     <td class="text-center border border-slate-300 w-1/4">
-                        <button wire:click="edit({{$notif->id}})" class="py-2 px-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-400 focus:outline-none focus:border-blue-600 focus:shadow-outline-red active:bg-blue-500 transition ease-in-out duration-150"><i class="fa-regular fa-pen-to-square"></i></button>
+                        <button wire:click="edit({{$notif->id}})" class="py-2 px-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-400 focus:outline-none focus:border-blue-600 focus:shadow-outline-red active:bg-blue-500 transition ease-in-out duration-150"><i class="fa-solid fa-eye"></i></button>
                         <x-jet-delete-button id="{{$notif->id}}" wire:click="delete({{$notif->id}})" 
                         class="del-btn inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150">
                             <i class="fa-regular fa-trash-can"></i>
@@ -65,6 +65,9 @@
         <p>{{$notifications->links()}}</p>
         @if ($isOpen)
             @include('livewire.admin.notif.create')
+        @endif
+        @if ($isShow)
+            @include('livewire.admin.notif.show')
         @endif
     </div>
 </div>

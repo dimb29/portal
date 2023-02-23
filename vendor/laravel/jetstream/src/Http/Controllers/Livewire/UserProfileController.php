@@ -15,9 +15,16 @@ class UserProfileController extends Controller
      */
     public function show(Request $request)
     {
-        return view('profile.show', [
-            'request' => $request,
-            'user' => $request->user(),
-        ]);
+        if(str_contains($request->server('PATH_INFO'), 'admin')){
+            return view('livewire.admin.profile.show', [
+                'request' => $request,
+                'user' => $request->user(),
+            ]);
+        }else{
+            return view('profile.show', [
+                'request' => $request,
+                'user' => $request->user(),
+            ]);
+        }
     }
 }

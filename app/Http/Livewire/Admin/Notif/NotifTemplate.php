@@ -7,7 +7,7 @@ use App\Models\NotifTemplate as Notif;
 
 class NotifTemplate extends Component
 {
-    public $search, $short, $isOpen, $notif_id, $title, $isNotif, $name_tag, $desc;
+    public $search, $short, $isOpen, $notif_id, $title, $isNotif, $name_tag, $desc, $descOn;
     public function render()
     {
         $notifications = Notif::with('notif');
@@ -63,6 +63,8 @@ class NotifTemplate extends Component
         $notif = Notif::find($id);
         $this->notif_id = $notif->id;
         $this->title = $notif->title;
+        $this->name_tag = $notif->name_tag;
+        $this->desc = $notif->desc;
         $this->openModal();
     }
     public function delete($id){
@@ -76,6 +78,7 @@ class NotifTemplate extends Component
         $this->resetInputField();
     }
     public function resetInputField(){
+        $this->notif_id = null;
         $this->title = null;
         $this->name_tag = null;
         $this->desc = null;
