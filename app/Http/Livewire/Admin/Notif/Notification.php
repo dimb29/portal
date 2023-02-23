@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class Notification extends Component
 {
     
-    public $search, $short, $isOpen, $isShow, $notif_id, $title, $desc, $isNotif = true, $user, $users, $listuser, $inuser, $type;
+    public $search, $short, $isOpen, $isShow, $notif_id, $title, $desc, $descOn, $isNotif = true, $user, $users, $listuser, $inuser, $type;
     protected $listeners = [
         'multiUser',
     ];
@@ -62,6 +62,19 @@ class Notification extends Component
         $this->listuser = $filterResult;
         // session()->flash('listlocs', 'cekcekcek');
         // dd($this->listloc);
+    }
+    public function changeType($value){
+        $this->type = $value;
+        if($value){
+            $get_temp = NotifTemp::find($value);
+            $this->title = $get_temp->title;
+            $this->desc = $get_temp->desc;
+            $this->descOn = true;
+        }else{
+            $this->title = null;
+            $this->desc = null;
+            $this->descOn = false;
+        }
     }
     public function store(){
         $this->validate([

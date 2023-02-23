@@ -31,6 +31,14 @@ class Post extends Component
         //     $this->acv = Auth::user()->cv;
         // }
         $this->post_id = $id;
+        $post = PostModel::with([
+            'author', 
+            'images', 
+            'videos', 
+            ])->where('id', $this->post_id)->first();
+        if($post->verified == 0 || $post->verified == 2){
+            return redirect('dashboard');
+        }
     }
 
     public function responseLike($bool){
@@ -44,9 +52,6 @@ class Post extends Component
             'images', 
             'videos', 
             ])->where('id', $this->post_id)->first();
-        if($post->verified == 0 || $post->verified == 2){
-            return redirect('dashboard');
-        }
         if(Auth::user()){
             $authid = $this->authid = Auth::user()->id;
             $authtype = $this->authtype = 'user';

@@ -21,9 +21,24 @@
             <livewire:search.nav-search/>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+            @if(Auth::user() != null)
+                <div class="ml-2 py-2">
+                    <span class="relative inline-flex rounded-md">
+                        <a href="{{ route('notif') }}" class="inline-flex items-center px-1 text-base leading-6 font-medium rounded-md text-gray-800 bg-white hover:text-gray-700 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                            <i class="fa-solid fa-envelope text-sm sm:text-lg my-auto mx-auto"></i>
+                        </a>
+                        @if($notifusers != 0 || $read_it != 0)
+                            <span class="flex absolute h-2 w-2 top-0 right-0 -mt-1 -mr-1 pointer-events-none">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
+                            </span>
+                        @endif
+                    </span>
+                </div>
+            @endif
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Auth::user() != null)
-                    <div class="ml-3 relative">
+                    <div class=" ml-1 relative">
                         <x-jet-dropdown align="right" width="60">
                             <x-slot name="trigger">
                             </x-slot>
@@ -63,7 +78,7 @@
                 @endif
 
                 <!-- Settings Dropdown -->
-                <div class="ml-3 relative">
+                <div class="ml-1 relative">
                     <x-jet-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos() && Auth::user() != null)

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Notif;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notification as Notif;
+use App\Models\NotifRead;
 use App\Models\Follow;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
@@ -29,7 +30,20 @@ class NotifList extends Component
     public function render()
     {
         $this->usid = Auth::user()->id;
-        $notifs = Notif::with('notif_employer')->where('to', $this->usid)->orderBy('created_at', 'DESC')->get();
+        $notifs = Notif::where('to', $this->usid)->orWhere('to', null)->orderBy('created_at', 'DESC')->get();
+        $isread = [];
+        foreach($notifs as $notif){
+            if(count($notif->readIt) > 0){
+                foreach($notif->readIt as $read){
+                    if($read->user_id == $this->usid){
+                        $isread [] = $read->user_id;
+                    }
+                }
+            }else{
+                $isread = [];
+            }
+            $notif->setAttribute('read_it', $isread);
+        }
         return view('livewire.notif.notif-list',[
             'notifs' => $notifs,
         ]);
@@ -38,10 +52,23 @@ class NotifList extends Component
     public function selectNotif($id){
         $this->star = $id;
         if($id):
-            $this->notifs = Notif::with('notif_employer')->where(['to' => $this->usid, 'save' => 1])->orderBy('created_at', 'DESC')->get();
+            $this->notifs = Notif::where(['to' => $this->usid, 'save' => 1])->orderBy('created_at', 'DESC')->get();
         else:
-            $this->notifs = Notif::with('notif_employer')->where('to', $this->usid)->orderBy('created_at', 'DESC')->get();
+            $this->notifs = Notif::where('to', $this->usid)->orWhere('to', null)->orderBy('created_at', 'DESC')->get();
         endif;
+        $isread = [];
+        foreach($this->notifs as $notif){
+            if(count($notif->readIt) > 0){
+                foreach($notif->readIt as $read){
+                    if($read->user_id == $this->usid){
+                        $isread [] = $read->user_id;
+                    }
+                }
+            }else{
+                $isread = [];
+            }
+            $notif->setAttribute('read_it', $isread);
+        }
         if($this->isOpen){
             $this->isOpen = false;
         }
@@ -71,17 +98,17 @@ class NotifList extends Component
         $this->selectNotif($this->star);
     }
 
-    public function follbackUser($data){
-        // dd($data);
-        $this->nofid = $data[0];
-        $addFollow = Follow::create([
-            'follower_id' => $data[1],
-            'following_id' => $data[2],
-        ]);
-        $this->readNotif();
-        session()->flash('message', 'Relasi berhasil ditambahkan.');
-        // return redirect()->route('notif');
-    }
+    // public function follbackUser($data){
+    //     // dd($data);
+    //     $this->nofid = $data[0];
+    //     $addFollow = Follow::create([
+    //         'follower_id' => $data[1],
+    //         'following_id' => $data[2],
+    //     ]);
+    //     $this->readNotif();
+    //     session()->flash('message', 'Relasi berhasil ditambahkan.');
+    //     // return redirect()->route('notif');
+    // }
     public function clickOpen($id){
         // dd([$this->nofid, $this->isOpen, $this->notiv]);
         $this->nofid = $id;
@@ -98,6 +125,15 @@ class NotifList extends Component
     public function readNotif(){
         if($this->nofid != null){
             $this->notiv = Notif::where('id', $this->nofid)->first();
+            if($this->notiv->to == 0){
+                $getread = NotifRead::where(['notif_id' => $this->nofid, 'user_id' => $this->usid])->first();
+                if(!$getread){
+                    $setread = NotifRead::create([
+                        'notif_id' => $this->nofid,
+                        'user_id' => $this->usid,
+                    ]);
+                }
+            }
             if($this->notiv->read == 1){
                 $read = Notif::where('id', $this->nofid)->update(['read' => '0']);
             }

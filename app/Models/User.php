@@ -62,4 +62,10 @@ class User extends Authenticatable
     public function likes(){
         return $this->belongsTo(Likes::class, 'id', 'user_id');
     }
+    public function notif_from_user(){
+        return $this->hasMany(Notification::class, 'from', 'id');
+    }
+    public function notif_to_user(){
+        return $this->hasMany(Notification::class, 'to', 'id');
+    }
 }

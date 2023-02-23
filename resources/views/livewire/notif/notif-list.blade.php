@@ -47,88 +47,34 @@
                                         <!-- <img src="#" alt=""> -->
                                         <div class="mb-4">
                                             <h1 class="text-xl font-semibold">{{$notiv->title}}</h1>
-                                            @if($notiv->type == 'user')
-                                                <p>
-                                                    from : 
-                                                    {{$notiv->notif_user->first_name.' '.$notiv->notif_user->last_name}}
-                                                    @if(isset($notiv->complain->post_id))
-                                                    <button wire:click="openChat([{{$notiv->complain->user_id}},'user', {{$notiv->complain->id}}, 'complain'])" class="text-blue-400 hover:text-blue-600">
-                                                        Hubungi
-                                                    </button>
-                                                    @endif
-                                                </p>
-                                            @else
-                                                <p>from : {{$notiv->notif_employer->name}}</p>
-                                            @endif
                                         </div>
                                     </div>
                                     <style>ul{margin-left:20px;}</style>
-                                    @if($notiv->notif_type == 1)
-                                        @if(isset($notiv->complain->post_id))
-                                            <p>Produk : <a href="{{url('posts/'.$notiv->complain->post_id)}}" target="_self" class="text-blue-400 hover:text-blue-600 underline">{{$notiv->complain->post->title}}</a></p>
-                                        @endif
-                                        <p>Tipe Laporan : 
-                                        @if(isset($notiv->complain->complain_list))
-                                            {{$notiv->complain->complain_list->title}}
-                                        @else
-                                            Lainnya (produk salah diterima, perilaku penjual kurang baik, dll.)
-                                        @endif
-                                        </p>
-                                    @else
-                                        @if(isset($notiv->post))
-                                            <p>Produk : {{$notiv->post->title}}</p>
-                                        @endif
+                                    @if(isset($notiv->post))
+                                        <p>Judul Berita :<a href="{{url('posts/'.$notiv->post->id)}}" class="text-blue-500"> {{$notiv->post->title}}</a></p>
                                     @endif
+                                    <div class="inline-flex">
+                                    <h1>Dikirim oleh :</h1>
+                                    <p class="pl-2">{{ $notiv->userFrom->name }}</p>
+                                    </div>
                                     <h1>Deskripsi :</h1>
                                     <p>{!! $notiv->desc !!}</p>
                                 @else
                                     @foreach($notifs as $notif)
-                                    @if($agent->isMobile())
-                                    <div class="relative cursor-pointer"
-                                    x-data="{openFil:true,style:'bg-white'}">
-                                    @else
-                                    <div class="relative cursor-pointer hover:bg-gray-300"
-                                    x-data="{openFil:false,style:'bg-white'}" x-on:mouseenter="style='bg-gray-300';openFil=true" x-on:mouseleave="style='bg-white';openFil=false">
-                                    @endif
-                                        @if($notif->notif_type == 4)
-                                            <div class="flex flex-row px-1 py-2">
-                                                <div class="flex flex-row w-3/5">
-                                                    @if($notif->read != 0)
-                                                    <img src="{{url('storage/photos/red-circle.png')}}" alt="" class="w-2 h-2 -ml-2">
-                                                    @endif
-                                                    <h1 class="truncate">{{$notif->notif_user->first_name .' '. $notif->notif_user->last_name}} menambahkan anda kedalam relasinya.</h1>
-                                                </div>
-                                                <div class="flex flex-row ml-auto">
-                                                    @if($notif->read != 0)
-                                                    <button type="button" wire:click="follbackUser([{{$notif->id}},{{$notif->to}},{{$notif->from}},'{{$notif->type}}','{{$notif->type_to}}'])"
-                                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded text-sm px-1 mr-20 mb-2 dark:bg-blue-600 
-                                                        dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                        Terima Permintaan
-                                                    </button>
-                                                    @else
-                                                    <button type="button"
-                                                        class="text-white bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded text-sm px-1 mr-20 my-auto dark:bg-blue-600 
-                                                        dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                        <i class="fa-solid fa-check mr-1"></i>
-                                                        Terhubung
-                                                    </button>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-row z-10 absolute top-1 right-0 pr-2 py-1" x-show="openFil" x-bind:class="style">
-                                                <x-jet-delete-button id="{{$notif->id}}" wire:click="delete({{$notif->id}})" class="fa-solid hover:text-red-700 fa-trash-can mx-1 ml-1 px-1 py-1"></x-jet-delete-button>
-                                                @if($notif->save == 0)
-                                                <i class="fa-solid fa-star text-gray-200 mx-1 px-1 py-1"></i>
-                                                @else
-                                                <i wire:click="delsave({{$notif->id}})" class="fa-solid fa-star text-yellow-500 mx-1 px-1 py-1" onclick="autoremoveNotif()"></i>
-                                                @endif
-                                            </div>
-                                            <hr>
+                                        @if($agent->isMobile())
+                                        <div class="relative cursor-pointer"
+                                        x-data="{openFil:true,style:'bg-white'}">
                                         @else
+                                        <div class="relative cursor-pointer hover:bg-gray-300"
+                                        x-data="{openFil:false,style:'bg-white'}" x-on:mouseenter="style='bg-gray-300';openFil=true" x-on:mouseleave="style='bg-white';openFil=false">
+                                        @endif
                                             <button @click="$wire.clickOpen({{$notif->id}})" class="flex flex-row w-full px-1 py-2 focus:outline-none">
                                                 <div class="flex flex-row w-1/4">
-                                                    @if($notif->read != 0)
-                                                    <img src="{{url('storage/photos/red-circle.png')}}" alt="" class="w-2 h-2 -ml-2">
+                                                    @if($notif->read != 0 ||($notif->to == 0 && count($notif->read_it) != 1))
+                                                    <span class="flex absolute h-2 w-2 top-1 left-0 -mt-1 -mr-1 pointer-events-none">
+                                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
+                                                    </span>
                                                     @endif
                                                     <h1 class="truncate">{{$notif->title}}</h1>
                                                 </div>
@@ -137,6 +83,7 @@
                                                     <div class="truncate">{!! strip_tags($notif->desc) !!}</div>
                                                 </div>
                                             </button>
+                                            @if($notif->to != null)
                                             <div class="flex flex-row z-10 absolute top-1 right-0 pr-2 py-1" x-show="openFil" x-bind:class="style">
                                                 <p>...  </p>
                                                 <x-jet-delete-button id="{{$notif->id}}" wire:click="delete({{$notif->id}})" class="fa-solid hover:text-red-700 fa-trash-can mx-1 ml-1 px-1 py-1"></x-jet-delete-button>
@@ -146,9 +93,9 @@
                                                 <i wire:click="delsave({{$notif->id}})" class="fa-solid fa-star text-yellow-500 mx-1 px-1 py-1" onclick="autoremoveNotif()"></i>
                                                 @endif
                                             </div>
+                                            @endif
                                             <hr>
-                                        @endif
-                                    </div>
+                                        </div>
                                     @endforeach
                                 </div>
                                 @endif
