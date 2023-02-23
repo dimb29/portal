@@ -6,7 +6,7 @@
 
 <x-slot name="footer">
 </x-slot>
-<div class="mt-12 sm:mt-20 max-w-6xl mx-auto">
+<div class="mt-20 max-w-6xl mx-auto">
 <div wire:loading class="fixed z-20 inset-0 place-content-center ">
     <div class="fixed justify-center h-full w-full opacity-25 bg-slate-300"> </div>
         <div class="flex justify-center my-72">
@@ -27,56 +27,57 @@
                         </div>
                     </div>
                 @endif
-                <div class="flex-auto m-1">
+                
+                <div class="flex justify-center">
+
+                    <div class="">
+
+                        <div class="text-center text-blue-700 font-bold text-2xl sm:text-3xl mb-2">
+                            {{$post->title}}
+                        </div>
+                        <h5 class="text-lg font-medium text-center">
+                            @php
+                            $regens = $post->regency;
+                            $dists = $post->district;
+                            for($i=0;$i < count($regens);$i++){
+                            if($i+1 == count($regens)){
+                                echo ucwords(strtolower($regens[$i]->name));
+                            }else{
+                                echo ucwords(strtolower($regens[$i]->name.", "));
+                                }
+                            }
+                            for($i=0;$i < count($dists);$i++){
+                            if($i+1 == count($dists)){
+                                echo ucwords(strtolower(", ".$dists[$i]->name));
+                            }else{
+                                echo ucwords(strtolower($dists[$i]->name.", "));
+                                }
+                            }
+                            @endphp
+                        </h5>
+                            <div class="flex flex-row justify-center">
+                                <p>by&nbsp;<span class="italic">{{ $post->author->first_name . ' ' . $post->author->last_name }}</span></p>
+                                &nbsp;on&nbsp;{{ $post->updated_at->format('l, d F Y') }}
+                            </div>
+                        <div id="location" data-id="{{$post->location_id}}"></div>
+                    </div>
+
+                </div>
+
+                <div class="flex-auto m-1 border-blue-500 border-b-2">
                     <div class="grid grid-flow-col">
                         <div class="py-4">
                         @if(count($post->images) != 0)
                         @foreach ($post['images'] as $image)
-                            <img class="h-40 sm:h-96" src="{{ url($image->url) }}" alt="{{ $image->description }}" width="100%">
+                            <img class="h-full sm:h-96" src="{{ url($image->url) }}" alt="{{ $image->description }}" width="100%">
                         @endforeach
                         @else
-                            <img class="h-40 sm:h-72" width="100%" src="{{ url('storage/photos/default_jobs.png') }}" alt="this is default">
+                            <img class="h-full sm:h-72" width="100%" src="{{ url('storage/photos/default_jobs.png') }}" alt="this is default">
                         @endif
                         </div>
                     </div>
 
-                    <div class="">
-
-                        <div class="">
-                        
-                            <div class="font-bold text-xl mb-2">
-                                {{$post->title}}
-                            </div>
-                            <h5 class="text-lg font-medium">
-                                @php
-                                $regens = $post->regency;
-                                $dists = $post->district;
-                                for($i=0;$i < count($regens);$i++){
-                                if($i+1 == count($regens)){
-                                    echo ucwords(strtolower($regens[$i]->name));
-                                }else{
-                                    echo ucwords(strtolower($regens[$i]->name.", "));
-                                    }
-                                }
-                                for($i=0;$i < count($dists);$i++){
-                                if($i+1 == count($dists)){
-                                    echo ucwords(strtolower(", ".$dists[$i]->name));
-                                }else{
-                                    echo ucwords(strtolower($dists[$i]->name.", "));
-                                    }
-                                }
-                                @endphp
-                            </h5>
-                                <div class="flex flex-col sm:flex-row mb-4 sm:mb-0">
-                                    <p>by&nbsp;<span class="italic">{{ $post->author->first_name . ' ' . $post->author->last_name }}</span></p>
-                                    &nbsp;on&nbsp;{{ $post->updated_at->format('F, d Y') }}
-                                </div>
-                            <div id="location" data-id="{{$post->location_id}}"></div>
-                        </div>
-
-                    </div>
-                    
-                    <div wire:ignore id="content{{$post->id}}" class="p-3 text-gray-700 text-base m-auto mt-10" readonly="readonly" x-data
+                    <div wire:ignore id="content{{$post->id}}" class="p-3 text-gray-700 text-base m-auto" readonly="readonly" x-data
                         >
                         <p>{!! $post->content !!}</p>
                     </div>
@@ -107,11 +108,7 @@
                 </div>
             </div>
             <div class="my-6">
-                <div class="max-w-7xl mx-auto" id="post-frame">
-                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-                        <livewire:comment.comment :post_id="$post->id"/>
-                    </div>
-                </div>
+                <livewire:comment.comment :post_id="$post->id"/>
             </div>
         </div>
         <div class="w-full sm:w-4/12 sm:pl-4 sm:pr-8 flex flex-col">
