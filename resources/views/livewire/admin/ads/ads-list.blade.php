@@ -3,11 +3,11 @@
 <x-slot name="footer">
 </x-slot>
 <x-slot name="header">
-    <p class="w-1/2 mx-0.5 text-left font-bold text-base sm:text-lg">Edit Notifications</p>
+    <p class="w-1/2 mx-0.5 text-left font-bold text-base sm:text-lg">Edit Ads</p>
     <p class="w-full m-0.5 text-right">
         <a href="{{route('admin.dashboard')}}" class="hover:text-cyan-500 hover:underline">Admin</a>
         /
-        <a href="{{route('admin.notif.templates')}}" class="hover:text-cyan-500 hover:underline">Notifications</a>
+        <a href="{{route('admin.ads')}}" class="hover:text-cyan-500 hover:underline">Ads</a>
     </p>
 </x-slot>
 <div class="w-full px-1 sm:px-8 py-1 sm:py-4">
@@ -24,7 +24,7 @@
         @endif
         <button wire:click="create()"
             class="loadings inline-flex items-center px-4 py-2 my-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-            Create New Notification
+            Create New Ads
         </button>
         <div class="flex flex-row mb-2">
             <input type="text" wire:model="search" placeholder="search.." 
@@ -43,30 +43,34 @@
                 <tr>
                     <th class="border border-slate-300">ID</th>
                     <th class="border border-slate-300">Judul</th>
+                    <th class="border border-slate-300">Nama Client</th>
                     <th class="border border-slate-300">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @if($notifications)
-                @foreach($notifications as $notif)
-                <tr>
-                    <td class="text-center border border-slate-300">{{$notif->id}}</td>
-                    <td class="border border-slate-300 px-1 truncate">{{$notif->title}}</td>
-                    <td class="text-center border border-slate-300 w-1/4">
-                        <button wire:click="edit({{$notif->id}})" class="py-2 px-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-400 focus:outline-none focus:border-blue-600 focus:shadow-outline-red active:bg-blue-500 transition ease-in-out duration-150"><i class="fa-regular fa-pen-to-square"></i></button>
-                        <x-jet-delete-button id="{{$notif->id}}" wire:click="delete({{$notif->id}})" 
-                        class="del-btn inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150">
-                            <i class="fa-regular fa-trash-can"></i>
-                        </x-jet-delete-button>
-                    </td>
-                </tr>
-                @endforeach
+                @if(count($ads) > 0)
+                    @foreach($ads as $ads)
+                    <tr>
+                        <td class="text-center border border-slate-300">{{$ads->id}}</td>
+                        <td class="border border-slate-300 px-1">{{$ads->title}}</td>
+                        <td class="border border-slate-300 px-1">{{$ads->client}}</td>
+                        <td class="text-center border border-slate-300 w-1/4">
+                            <button wire:click="edit({{$ads->id}})" class="py-2 px-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-400 focus:outline-none focus:border-blue-600 focus:shadow-outline-red active:bg-blue-500 transition ease-in-out duration-150"><i class="fa-regular fa-pen-to-square"></i></button>
+                            <x-jet-delete-button id="{{$ads->id}}" wire:click="delete({{$ads->id}})" 
+                            class="del-btn inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </x-jet-delete-button>
+                        </td>
+                    </tr>
+                    @endforeach
                 @endif
             </tbody>
         </table>
-        <p>{{$notifications->links()}}</p>
+        @if(count($ads) > 0)
+            <p>{{$ads->links()}}</p>
+        @endif
         @if ($isOpen)
-            @include('livewire.admin.notif.create')
+            @include('livewire.admin.ads.create')
         @endif
     </div>
 </div>

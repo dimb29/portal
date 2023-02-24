@@ -16,6 +16,20 @@
         <p class="text-sm sm:text-base font-semibold mx-0.5 my-auto">{{Auth::user()->name}}</p>
     </a>
     <div class="mt-3 px-1">
+        <x-jet-side-link @click="openProfilePT = !openProfilePT" :active="request()->routeIs('admin.profilept.*')" class="mt-2 mb-1 h-14">
+            <i class="fa-solid fa-address-card text-sm sm:text-xl my-auto mx-2"></i>
+            <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Profil Perusahaan')}}</p>
+        </x-jet-side-link>
+        <div class="flex flex-col ml-2 mb-2" x-show="openProfilePT">
+            <x-jet-side-link tags="child" href="{{ route('admin.profilept.aboutus') }}" :active="request()->routeIs('admin.profilept.aboutus')" class="my-0.5 h-10">
+                <i class="fa-solid fa-circle-info text-sm sm:text-xl my-auto mx-2"></i>
+                <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Tentang Kami')}}</p>
+            </x-jet-side-link>
+            <x-jet-side-link tags="child" href="{{ route('admin.profilept.vimi') }}" :active="request()->routeIs('admin.profilept.vimi')" class="my-0.5 h-10">
+                <i class="fa-solid fa-compass-drafting text-sm sm:text-xl my-auto mx-2"></i>
+                <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Visi & Misi')}}</p>
+            </x-jet-side-link>
+        </div>
         <x-jet-side-link href="{{ route('admin.posts') }}" :active="request()->routeIs('admin.posts')" class="my-2 h-14">
             <i class="fa-solid fa-newspaper text-sm sm:text-base my-auto mx-2"></i>
             <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Posts')}}</p>
@@ -65,6 +79,17 @@
         <img src="{{url(Auth::user()->profile_photo_url)}}" alt="poto-user" class="block bg-gray-300 rounded-full h-7 w-7 object-cover mx-auto my-auto" />
     </a>
     <div class="mt-3 px-1">
+        <x-jet-side-link @click="openProfilePT = !openProfilePT" :active="request()->routeIs('admin.profilept.*')" class="mt-2 mb-1 h-14">
+            <i class="fa-solid fa-address-card text-sm sm:text-xl my-auto mx-auto"></i>
+        </x-jet-side-link>
+        <div class="flex flex-col ml-1 mb-2" x-show="openProfilePT">
+            <x-jet-side-link tags="child" href="{{ route('admin.profilept.aboutus') }}" :active="request()->routeIs('admin.profilept.aboutus')" class="my-0.5 h-10">
+                <i class="fa-solid fa-circle-info text-sm sm:text-xl my-auto mx-auto"></i>
+            </x-jet-side-link>
+            <x-jet-side-link tags="child" href="{{ route('admin.profilept.vimi') }}" :active="request()->routeIs('admin.profilept.vimi')" class="my-0.5 h-10">
+                <i class="fa-solid fa-compass-drafting text-sm sm:text-xl my-auto mx-auto"></i>
+            </x-jet-side-link>
+        </div>
         <x-jet-side-link href="{{ route('admin.posts') }}" :active="request()->routeIs('admin.posts')" class="my-2 h-14">
             <i class="fa-solid fa-newspaper text-sm sm:text-base my-auto mx-auto"></i>
         </x-jet-side-link>

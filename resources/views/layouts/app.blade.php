@@ -72,8 +72,13 @@
                 else:
                     $opennotif = false;
                 endif;
+                if(request()->routeIs('admin.profilept.*')):
+                    $profilept = true;
+                else:
+                    $profilept = false;
+                endif;
             @endphp
-            <div class="inline-flex w-full h-full" x-data="{showSide:false, openFilter:@js($openfilter), openNotif:@js($opennotif)}">
+            <div class="inline-flex w-full h-full" x-data="{showSide:false, openFilter:@js($openfilter), openNotif:@js($opennotif), openProfilePT:@js($profilept)}">
                 @livewire('admin.layouts.side-menu')
                 <div class="w-screen min-h-screen bg-white">
                     @livewire('admin.layouts.navigation-menu')

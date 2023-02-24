@@ -6,17 +6,21 @@
         </svg>
     </button>
     <div class="flex flex-row gap-4">
-        <div class="py-2">
-            <span class="relative inline-flex rounded-md">
-                <button type="button" class="inline-flex items-center px-1 text-base leading-6 font-medium rounded-md text-gray-800 bg-white hover:text-gray-700 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                <i class="fa-solid fa-envelope text-sm sm:text-lg my-auto mx-auto"></i>
-                </button>
-                <span class="flex absolute h-2 w-2 top-0 right-0 -mt-1 -mr-1 pointer-events-none">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
+        @if(Auth::user() != null)
+            <div class="py-2">
+                <span class="relative inline-flex rounded-md">
+                    <a href="{{ route('admin.notif.receive') }}" class="inline-flex items-center px-1 text-base leading-6 font-medium rounded-md text-gray-800 bg-white hover:text-gray-700 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                        <i class="fa-solid fa-envelope text-sm sm:text-lg my-auto mx-auto"></i>
+                    </a>
+                    @if($notifusers != 0 || $read_it != 0)
+                        <span class="flex absolute h-2 w-2 top-0 right-0 -mt-1 -mr-1 pointer-events-none">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
+                        </span>
+                    @endif
                 </span>
-            </span>
-        </div>
+            </div>
+        @endif
         <form method="POST" action="{{ route('logout') }}" x-data class="my-auto ">
             @csrf
             <button wire:click="{{route('logout')}}" @click.prevent="$root.submit();" @mouseover="showLogout = true" @mouseleave="showLogout = false">

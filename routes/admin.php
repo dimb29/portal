@@ -25,6 +25,10 @@ use App\Http\Livewire\Admin\Filters\Category as AdminCategory;
 use App\Http\Livewire\Admin\Users\User as AdminUser;
 use App\Http\Livewire\Admin\Notif\Notification as AdminNotif;
 use App\Http\Livewire\Admin\Notif\NotifTemplate as AdminNotifTemplate;
+use App\Http\Livewire\Admin\ProfilePT\AboutUs as AdminAboutUs;
+use App\Http\Livewire\Admin\ProfilePT\VisiMisi as AdminVisiMisi;
+use App\Http\Livewire\Admin\Notif\NotifList as AdminNotifList;
+use App\Http\Livewire\Admin\Ads\AdsList as AdminAds;
 
 // Route::get('admin/{id}', AdminMain::class)->name('admin.profile.info');
 Route::prefix('admin')->name('admin.')->group(function(){
@@ -37,9 +41,15 @@ Route::prefix('admin')->name('admin.')->group(function(){
         });
         Route::prefix('notif')->name('notif.')->group(function(){
             route::get('/', AdminNotif::class)->name('notif');
+            Route::get('/receive', AdminNotifList::class)->name('receive');
             route::get('/templates', AdminNotifTemplate::class)->name('templates');
         });
+        Route::prefix('profilept')->name('profilept.')->group(function(){
+            route::get('/tentang-kami', AdminAboutUs::class)->name('aboutus');
+            route::get('/visi-misi', AdminVisiMisi::class)->name('vimi');
+        });
         route::get('/users', AdminUser::class)->name('users');
+        route::get('/ads', AdminAds::class)->name('ads');
     });
 
     $authMiddleware = config('jetstream.guard')
