@@ -30,6 +30,12 @@
                 
                 <div class="flex justify-center">
 
+                    <div id="fixed-share">
+                        <div class="max-w-6xl mx-auto">
+                            <p>Sharee</p>
+                        </div>
+                    </div>
+
                     <div class="">
 
                         <div class="text-center text-blue-700 font-bold text-2xl sm:text-3xl mb-2">
@@ -132,6 +138,14 @@
         } )
         .catch(error => {
             console.error(error);
+        });
+
+        window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            document.getElementById("fixed-share").style.display = "block";
+        } else {
+            document.getElementById("fixed-share").style.display = "none";
+        }
         });
 
 function copyLink() {
