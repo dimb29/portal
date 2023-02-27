@@ -8,6 +8,7 @@ use Livewire\Component;
 
 class NavigationMenu extends Component
 {
+    public $receive_readdata;
     /**
      * The component's listeners.
      *
@@ -15,6 +16,7 @@ class NavigationMenu extends Component
      */
     protected $listeners = [
         'refresh-navigation-menu' => '$refresh',
+        'notifIsRead',
     ];
 
     /**
@@ -22,6 +24,11 @@ class NavigationMenu extends Component
      *
      * @return \Illuminate\View\View
      */
+
+
+    public function notifIsRead($data){
+        $this->receive_readdata = $data;
+    }
     public function render()
     {
         if(Auth::user() != null){

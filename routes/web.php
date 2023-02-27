@@ -8,6 +8,8 @@ use App\Http\Livewire\Posts\Berita;
 
 use App\Http\Livewire\Posts\Posts;
 use App\Http\Livewire\Notif\NotifList;
+use App\Http\Livewire\ProfilPt\AboutUs;
+use App\Http\Livewire\ProfilPt\VisiMisi;
 
 // use App\Http\Livewire\Search\SearchShow;
 
@@ -37,6 +39,10 @@ Route::middleware([
 });
 Route::get('/posts/{id}', p::class);
 Route::get('/cari/{data}', Berita::class)->name('cari');
+Route::prefix('profilept')->name('profilept.')->group(function(){
+    route::get('/tentang-kami', AboutUs::class)->name('aboutus');
+    route::get('/visi-misi', VisiMisi::class)->name('vimi');
+});
 
 
 require __DIR__ . "/admin.php";

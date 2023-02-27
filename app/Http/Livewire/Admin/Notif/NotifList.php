@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Notif;
+namespace App\Http\Livewire\Admin\Notif;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +44,7 @@ class NotifList extends Component
             }
             $notif->setAttribute('read_it', $isread);
         }
-        return view('livewire.notif.notif-list',[
+        return view('livewire.admin.notif.notif-list',[
             'notifs' => $notifs,
         ]);
     }

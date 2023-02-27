@@ -1,5 +1,7 @@
 <x-slot name="admin">
 </x-slot>
+<x-slot name="footer">
+</x-slot>
 <x-slot name="header">
     <p class="w-1/2 mx-0.5 text-left font-bold text-base sm:text-lg">Edit Posts</p>
     <p class="w-full m-0.5 text-right">
