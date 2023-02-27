@@ -31,8 +31,11 @@
                 <div class="flex justify-center">
 
                     <div id="fixed-share">
-                        <div class="max-w-6xl mx-auto">
-                            <p>Sharee</p>
+                        <div class="flex flex-row max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="text-center font-bold textl80">
+                                {{$post->title}}
+                            </div>
+                            <div class="ml-4">Bagikan</div>
                         </div>
                     </div>
 
