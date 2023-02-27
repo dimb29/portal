@@ -46,10 +46,36 @@
                                     class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
                                     <option value="">Pilih</option>
                                     @foreach($types as $type)
-                                        <option value=""></option>
+                                        <option value="{{$type->uuid}}">{{$type->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="url">Tautan Berita :</label>
+                        <x-jet-input type="url" wire:model="url" name="url" id="url" 
+                        class="shadow appearance-none w-full border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline" />
+                    </div>
+                    <div class="mb-4">
+                        <div x-data="{ isUploading: false, progress: 0 }"
+                            x-on:livewire-upload-start="isUploading = true"
+                            x-on:livewire-upload-finish="isUploading = false"
+                            x-on:livewire-upload-error="isUploading = false"
+                            x-on:livewire-upload-progress="progress = $event.detail.progress">
+                            <div class="flex">
+                                <label for="photos"
+                                    class="block text-gray-700 text-sm font-bold mb-2">Gambar iklan</label>
+                                {{-- <div class="px-2" wire:loading
+                                    wire:target="photos">Uploading</div> --}}
+                                <div x-show="isUploading" class="px-2">
+                                    <progress max="100" x-bind:value="progress"></progress>
+                                </div>
+                            </div>
+                            <input type="file" name="photos" id="photos"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                wire:model="photos">
+                            @error('photos') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                     </div>
                 </div>

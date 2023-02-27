@@ -14,7 +14,13 @@ class Ads extends Model
         'title',
         'client',
         'type',
+        'images',
+        'url',
         'expiration_date',
     ];
+
+    public function get_type(){
+        return $this->belongsTo(AdsType::class, 'uuid' ,'type');
+    }
 
 }

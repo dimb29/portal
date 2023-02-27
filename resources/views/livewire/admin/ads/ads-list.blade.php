@@ -48,15 +48,15 @@
                 </tr>
             </thead>
             <tbody>
-                @if(count($ads) > 0)
-                    @foreach($ads as $ads)
+                @if($ads)
+                    @foreach($ads as $ads_data)
                     <tr>
-                        <td class="text-center border border-slate-300">{{$ads->id}}</td>
-                        <td class="border border-slate-300 px-1">{{$ads->title}}</td>
-                        <td class="border border-slate-300 px-1">{{$ads->client}}</td>
+                        <td class="text-center border border-slate-300">{{$ads_data->id}}</td>
+                        <td class="border border-slate-300 px-1">{{$ads_data->title}}</td>
+                        <td class="border border-slate-300 px-1">{{$ads_data->client}}</td>
                         <td class="text-center border border-slate-300 w-1/4">
-                            <button wire:click="edit({{$ads->id}})" class="py-2 px-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-400 focus:outline-none focus:border-blue-600 focus:shadow-outline-red active:bg-blue-500 transition ease-in-out duration-150"><i class="fa-regular fa-pen-to-square"></i></button>
-                            <x-jet-delete-button id="{{$ads->id}}" wire:click="delete({{$ads->id}})" 
+                            <button wire:click="edit({{$ads_data->id}})" class="py-2 px-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-400 focus:outline-none focus:border-blue-600 focus:shadow-outline-red active:bg-blue-500 transition ease-in-out duration-150"><i class="fa-regular fa-pen-to-square"></i></button>
+                            <x-jet-delete-button id="{{$ads_data->id}}" wire:click="delete({{$ads_data->id}})" 
                             class="del-btn inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150">
                                 <i class="fa-regular fa-trash-can"></i>
                             </x-jet-delete-button>
@@ -66,7 +66,7 @@
                 @endif
             </tbody>
         </table>
-        @if(count($ads) > 0)
+        @if($ads)
             <p>{{$ads->links()}}</p>
         @endif
         @if ($isOpen)

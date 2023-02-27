@@ -309,7 +309,11 @@ class Post extends Component
         }else{
             $this->descOn = false;
             $get_temp = NotifTemp::find($this->verify);
-            $this->title = $get_temp->name_tag;
+            if($get_temp){
+                $this->title = $get_temp->name_tag;
+            }else{
+                $this->title = null;
+            }
             $this->desc = null;
         }
     }

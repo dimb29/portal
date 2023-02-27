@@ -66,6 +66,10 @@
             <i class="fa-solid fa-users text-sm sm:text-xl my-auto mx-2"></i>
             <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Users')}}</p>
         </x-jet-side-link>
+        <x-jet-side-link href="{{ route('admin.ads') }}" :active="request()->routeIs('admin.ads')" class="my-2 h-14">
+            <i class="fa-brands fa-buysellads text-sm sm:text-xl my-auto mx-2"></i>
+            <p class="text-sm sm:text-base mx-0.5 my-auto">{{__('Iklan')}}</p>
+        </x-jet-side-link>
     </div>
 </div>
 <div x-show="!showSide" x-transition:enter.delay.300ms
@@ -117,6 +121,9 @@
         </div>
         <x-jet-side-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')" class="my-2 h-14">
             <i class="fa-solid fa-users text-sm sm:text-xl my-auto mx-auto"></i>
+        </x-jet-side-link>
+        <x-jet-side-link href="{{ route('admin.ads') }}" :active="request()->routeIs('admin.ads')" class="my-2 h-14">
+            <i class="fa-brands fa-buysellads text-sm sm:text-xl my-auto mx-auto"></i>
         </x-jet-side-link>
     </div>
 </div>

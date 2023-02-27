@@ -42,7 +42,7 @@ Route::get('/cari/{data}', Berita::class)->name('cari');
 Route::prefix('profilept')->name('profilept.')->group(function(){
     route::get('/tentang-kami', AboutUs::class)->name('aboutus');
     route::get('/visi-misi', VisiMisi::class)->name('vimi');
-});
+}); 
 
 
 require __DIR__ . "/admin.php";

@@ -1,4 +1,13 @@
 <div class="flex flex-col">
+    @if($ads_right_top)
+    <div class="">
+        <div class="flex w-full justify-center mb-4">
+            <a href="{{$ads_right_top->url}}" target="_blank" class="cursor-pointer">
+                <img src="{{url($ads_right_top->images)}}" alt="" class="w-full">
+            </a>
+        </div>
+    </div>
+    @endif
     <div class="">
         @if($populers)
             <div class="shadow-sm mb-4">
@@ -38,6 +47,17 @@
             </div>
         @endif
     </div>
+    @if(count($ads_right_middle) > 0)
+        @foreach($ads_right_middle as $ads_rm)
+        <div class="">
+            <div class="flex w-full justify-center mb-4">
+                <a href="{{$ads_rm->url}}" target="_blank" class="cursor-pointer">
+                    <img src="{{url($ads_rm->images)}}" alt="" class="w-full">
+                </a>
+            </div>
+        </div>
+        @endforeach
+    @endif
     <div class="">
         @if($comments)
             <div class="border border-b shadow-sm mb-4">
@@ -98,4 +118,15 @@
             </div>
         @endif
     </div>
+    @if(count($ads_right_bottom) > 0)
+        @foreach($ads_right_bottom as $ads_rbtm)
+        <div class="">
+            <div class="flex w-full justify-center mb-4">
+                <a href="{{$ads_rbtm->url}}" target="_blank" class="cursor-pointer">
+                    <img src="{{url($ads_rbtm->images)}}" alt="" class="w-full">
+                </a>
+            </div>
+        </div>
+        @endforeach
+    @endif
 </div>

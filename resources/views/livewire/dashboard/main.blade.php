@@ -15,43 +15,60 @@
 <div class="bg-yellow sm:bg-white bg-fixed mt-20" >
 
     <div class="flex flex-col sm:flex-row max-w-6xl mx-auto">
-        @if($headlines)
         <div class="w-full sm:w-2/3 sm:pl-8 sm:pr-4">
-            @foreach($headlines as $headline)
-            @if($loop->first)
-            <a href="{{url('posts/'.$headline->id)}}" class="relative w-full bg-gray-800 text-white hover:text-blue-500 cursor-pointer">
-                @if($headline->images)
-                @foreach($headline->images as $image)
-                <img class="static top-0 w-full h-96 object-cover" src="{{url($image->url)}}" alt="foto-berita">
-                @endforeach
-                @else
-                <img class="static top-0 w-full h-96 object-cover" src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="foto-berita">
-                @endif
-                <p class="absolute top-0 bg-white text-blue-300 shadow-md rounded-r-lg py-1 pl-2 pr-4 mt-4 font-bold">HEADLINE</p>
-                <p class="texl1 pt-3 absolute inset-x-0 bottom-0 px-1 sm:px-2 text-sm sm:text-3xl" style="background: rgba(0, 0, 0, 0.5);">
-                    {{$headline->title}}
-                </p>
-            </a>
+            @if($ads_top)
+                <a href="{{$ads_top->url}}" class="relative w-full text-white hover:text-blue-500 cursor-pointer">
+                    <img src="{{url($ads_top->images)}}" alt="" class="w-full mb-8 h-20 sm:h-56 border-2 border-solid border-gray-500 hover:border-blue-500" />
+                </a>
             @endif
-            @endforeach
-            <div class="w-full bg-gray-900 px-1 pb-1 grid grid-cols-4 gap-1">
+            @if($headlines)
+            <div>
                 @foreach($headlines as $headline)
-                @if(!($loop->first))
-                <a href="{{url('posts/'.$headline->id)}}" class="h-20 sm:h-auto border border-solid hover:border-blue-500 text-white hover:text-blue-500 cursor-pointer">
+                @if($loop->first)
+                <a href="{{url('posts/'.$headline->id)}}" class="relative w-full bg-gray-800 text-white hover:text-blue-500 cursor-pointer">
                     @if($headline->images)
-                        @foreach($headline->images as $image)
-                            <img src="{{url($image->url)}}" alt="photo-news" class="w-full h-10 sm:h-24 object-cover">
-                        @endforeach
+                    @foreach($headline->images as $image)
+                    <img class="static top-0 w-full h-96 object-cover" src="{{url($image->url)}}" alt="foto-berita">
+                    @endforeach
                     @else
-                        <img src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="photo-news" class="w-full h-10 sm:h-24 object-cover">
+                    <img class="static top-0 w-full h-96 object-cover" src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="foto-berita">
                     @endif
-                    <p class="textl2 text-xs sm:my-0.5 mx-1">
+                    <p class="absolute top-0 bg-white text-blue-300 shadow-md rounded-r-lg py-1 pl-2 pr-4 mt-4 font-bold">HEADLINE</p>
+                    <p class="texl1 pt-3 absolute inset-x-0 bottom-0 px-1 sm:px-2 text-sm sm:text-3xl" style="background: rgba(0, 0, 0, 0.5);">
                         {{$headline->title}}
                     </p>
                 </a>
                 @endif
                 @endforeach
+                <div class="w-full bg-gray-900 px-1 pb-1 grid grid-cols-4 gap-1">
+                    @foreach($headlines as $headline)
+                    @if(!($loop->first))
+                    <a href="{{url('posts/'.$headline->id)}}" class="h-20 sm:h-auto border border-solid hover:border-blue-500 text-white hover:text-blue-500 cursor-pointer">
+                        @if($headline->images)
+                            @foreach($headline->images as $image)
+                                <img src="{{url($image->url)}}" alt="photo-news" class="w-full h-10 sm:h-24 object-cover">
+                            @endforeach
+                        @else
+                            <img src="{{url('storage/photos/post/N1gXTbqKoYiXrmVYBqQCpjixX48FYxUB5tkJgqcP.jpg')}}" alt="photo-news" class="w-full h-10 sm:h-24 object-cover">
+                        @endif
+                        <p class="textl2 text-xs sm:my-0.5 mx-1">
+                            {{$headline->title}}
+                        </p>
+                    </a>
+                    @endif
+                    @endforeach
+                </div>
             </div>
+            @endif
+            @if(count($ads_middle) > 0)
+            @foreach($ads_middle as $ads_mdl)
+            <div class="flex w-full justify-center mt-4 sm:mb-2 mb-1">
+                <a href="{{$ads_mdl->url}}" class="text-white hover:text-blue-500 cursor-pointer">
+                    <img src="{{url($ads_mdl->images)}}" target="_blank" alt="" class="h-20 sm:h-56 border-2 border-solid border-gray-500 hover:border-blue-500" />
+                </a>
+            </div>
+            @endforeach
+            @endif
             <div class="mt-4 sm:mt-8">
                 <div class="flex flex-row border-b border-solid border-gray-400">
                     <div class="w-5/12 sm:w-3/12 ml-2 sm:ml-0 pr-10 sm:pr-5">
@@ -91,8 +108,16 @@
                     @endif
                 </div>
             </div>
+            @if(count($ads_bottom) > 0)
+                @foreach($ads_bottom as $ads_btm)
+                <div class="flex w-full justify-center mt-4 sm:mb-2 mb-1">
+                    <a href="{{$ads_btm->url}}" target="_blank" class="text-white hover:text-blue-500">
+                        <img src="{{url($ads_btm->images)}}" alt="" class="h-20 sm:h-56 border-2 border-solid border-gray-500 hover:border-blue-500" />
+                    </a>
+                </div>
+                @endforeach
+            @endif
         </div>
-        @endif
         <div class="w-full mt-4 sm:mt-0 sm:w-1/3 sm:pl-4 sm:pr-8 flex flex-col">
             <livewire:layouts.right-menu/>
         </div>

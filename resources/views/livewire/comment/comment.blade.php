@@ -19,7 +19,7 @@
                     @endif
                     Suka
                 </p> -->
-                <div class="mb-4 bg-white flex flex-row py-2 pl-4 pr-4 rounded-lg shadow-lg border border-solid w-full">
+                <div wire:ignore class="mb-4 bg-white flex flex-row py-2 pl-4 pr-4 rounded-lg shadow-lg border border-solid w-full">
                     <input wire:model="komen" type="text" class="w-full h-12 focus:outline-none border-none" placeholder="Tulis Komentar">
                     <i wire:click="sendComment([{{$post->id}}])" class="fa-solid fa-circle-chevron-right text-lg my-auto mx-auto cursor-pointer"></i>
                 </div>
@@ -32,7 +32,7 @@
             @foreach($comments as $comment)
             <div class="flex flex-row mt-4" x-data="{showComment{{$comment->id}}:false, commentChild{{$comment->id}}:false}">
                 <div class="mr-2 w-16">
-                    @if($comment->author_type == 'user')
+                    @if($comment->author_type)
                         @if($comment->author->profile_photo_url)
                         <img src="{{url($comment->author->profile_photo_url)}}" alt="" class="w-14 h-14 rounded-full object-cover border border-solid">
                         @else
@@ -42,11 +42,41 @@
                 </div>
                 <div class="flex flex-col w-full">
                     <div class="content border border-solid rounded shadow-lg p-2">
-                        <div class="flex flex-row">
-                            @if($comment->author_type == 'user')
-                            <p class="font-bold text-sm mr-1">{{$comment->author->name}}</p>
-                            <!-- <p class="my-auto text-xs text-gray-500 italic">pengguna</p> -->
-                            @endif
+                        <div class="flex flex-row justify-between">
+                            <div class="inline-flex">
+                                <p class="font-bold text-sm mr-1 my-auto">{{$comment->author->name}}</p>
+                                @if(($comment->author_type == 'administr') || ($comment->author_type ==  'editrx'))
+                                    <i class="fa-solid fa-circle-check text-blue-500  my-auto"></i>
+                                @endif
+                            </div>
+                            <div>
+                                @if($authid == $comment->author_id)
+                                <div class="relative" x-data="{ open: false }" @click.away="open = false" @close.stop="open = false">
+                                    <div @click="open = ! open">
+                                        <span class="inline-flex rounded-md px-3 mt-4">
+                                            <i class="fa-solid fa-ellipsis-vertical cursor-pointer"></i>
+                                        </span>
+                                    </div>
+
+                                    <div x-show="open"
+                                            x-transition:enter="transition ease-out duration-200"
+                                            x-transition:enter-start="transform opacity-0 scale-95"
+                                            x-transition:enter-end="transform opacity-100 scale-100"
+                                            x-transition:leave="transition ease-in duration-75"
+                                            x-transition:leave-start="transform opacity-100 scale-100"
+                                            x-transition:leave-end="transform opacity-0 scale-95"
+                                            class="absolute z-50 mt-2 w-auto rounded-md shadow-lg origin-top-right right-0"
+                                            style="display: none;">
+                                        <div class="rounded-md ring-1 ring-black ring-opacity-5">
+                                            <x-jet-delete-button id="{{$comment->id}}" wire:click="deleteMyComment({{$comment->id}})"
+                                                class="hover:text-red-500">
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </x-jet-delete-button>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
                         </div>            
                         <p class="text-gray-400 text-xs font-medium mb-2"> 
                             @php
@@ -110,7 +140,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="mb-4 flex flex-row py-2 pl-4 pr-6 rounded-3xl shadow border border-solid" x-show="showComment{{$comment->id}}">
+                        <div wire:ignore class="mb-4 flex flex-row py-2 pl-4 pr-6 rounded-3xl shadow border border-solid" x-show="showComment{{$comment->id}}">
                             <input wire:model="komen" type="text" class="w-full focus:outline-none border-none" placeholder="Tambah Komentar">
                             <i wire:click="sendComment([{{$post->id}},{{$comment->id}}])" class="fa-solid fa-circle-chevron-right text-lg my-auto cursor-pointer"></i>
                         </div>
@@ -120,7 +150,7 @@
                             @foreach($comment->child as $child)
                                 <div class="flex flex-row mt-4" x-data="{showComment{{$child->id}}:false}">
                                     <div class="mr-2 min-w-20">
-                                    @if($child->author_type == 'user')
+                                    @if($child->author_type)
                                         @if($child->author->profile_photo_url)
                                         <img src="{{url($child->author->profile_photo_url)}}" alt="" class="w-14 rounded-3xl border border-solid">
                                         @else
@@ -130,25 +160,56 @@
                                     </div>
                                     <div class="flex flex-col w-full">
                                         <div class="content border border-solid rounded shadow-lg p-2">
-                                            <div class="flex flex-row">
-                                                @if($child->author_type == 'user')
-                                                <p class="font-bold text-sm mr-0.5 sm:mr-1 truncate">{{$child->author->name}}</p>
-                                                <!-- <p class="my-auto text-xs text-gray-500 italic hidden sm:flex">pengguna</p> -->
-                                                @endif
-                                                <i class="fa-solid fa-caret-right mx-2 my-auto text-xs"></i>
-                                                @php
-                                                    if($child->parent2_id):
-                                                        $isparent = 'parent2';
-                                                        $parent_id = $child->parent2_id;
-                                                    else:
-                                                        $isparent = 'parent';
-                                                        $parent_id = $child->parent_id;
-                                                    endif;
-                                                    $parent_type = $child->$isparent->author_type;
-                                                @endphp
-                                                @if($parent_type == 'user')
-                                                <p class="font-bold text-sm mr-0.5 sm:ml-1 truncate">{{$child->$isparent->author->name}}</p>
-                                                @endif
+                                            <div class="flex flex-row justify-between">
+                                                <div class="inline-flex">
+                                                    <p class="font-bold text-sm mr-1 my-auto">{{$child->author->name}}</p>
+                                                    @if(($child->author_type == 'administr') || ($child->author_type ==  'editrx'))
+                                                        <i class="fa-solid fa-circle-check text-blue-500  my-auto"></i>
+                                                    @endif
+                                                    <i class="fa-solid fa-caret-right mx-2 my-auto text-xs"></i>
+                                                    @php
+                                                        if($child->parent2_id):
+                                                            $isparent = 'parent2';
+                                                            $parent_id = $child->parent2_id;
+                                                        else:
+                                                            $isparent = 'parent';
+                                                            $parent_id = $child->parent_id;
+                                                        endif;
+                                                        $parent_type = $child->$isparent->author_type;
+                                                    @endphp
+                                                    <p class="font-bold text-sm mr-0.5 sm:ml-1 truncate my-auto">{{$child->$isparent->author->name}}</p>
+                                                    @if(($child->$isparent->author_type == 'administr') || ($child->$isparent->author_type ==  'editrx'))
+                                                        <i class="fa-solid fa-circle-check text-blue-500  my-auto"></i>
+                                                    @endif
+                                                </div>
+                                                <div>
+                                                    @if($authid == $child->author_id)
+                                                    <div class="relative" x-data="{ open: false }" @click.away="open = false" @close.stop="open = false">
+                                                        <div @click="open = ! open">
+                                                            <span class="inline-flex rounded-md px-3 mt-4">
+                                                                <i class="fa-solid fa-ellipsis-vertical cursor-pointer"></i>
+                                                            </span>
+                                                        </div>
+
+                                                        <div x-show="open"
+                                                                x-transition:enter="transition ease-out duration-200"
+                                                                x-transition:enter-start="transform opacity-0 scale-95"
+                                                                x-transition:enter-end="transform opacity-100 scale-100"
+                                                                x-transition:leave="transition ease-in duration-75"
+                                                                x-transition:leave-start="transform opacity-100 scale-100"
+                                                                x-transition:leave-end="transform opacity-0 scale-95"
+                                                                class="absolute z-50 mt-2 w-auto rounded-md shadow-lg origin-top-right right-0"
+                                                                style="display: none;">
+                                                            <div class="rounded-md ring-1 ring-black ring-opacity-5">
+                                                                <x-jet-delete-button id="{{$child->id}}" wire:click="deleteMyComment({{$child->id}})"
+                                                                    class="hover:text-red-500">
+                                                                    <i class="fa-regular fa-trash-can"></i>
+                                                                </x-jet-delete-button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endif
+                                                </div>
                                             </div>    
                                             <p class="text-gray-400 text-xs font-medium mb-2"> 
                                                 @php
@@ -190,7 +251,7 @@
                                                 <i class="fa-regular fa-comment-dots text-sm mx-1 my-auto cursor-pointer" @click="showComment{{$child->id}} =! showComment{{$child->id}}"></i>
                                                 <p class="mr-2 my-auto text-gray-500 cursor-pointer text-xs" @click="showComment{{$child->id}} =! showComment{{$child->id}}">Balas  </p>
                                             </div>
-                                            <div class="mb-4 flex flex-row py-2 pl-2 pr-4 rounded-3xl shadow border border-solid" x-show="showComment{{$child->id}}">
+                                            <div wire:ignore class="mb-4 flex flex-row py-2 pl-2 pr-4 rounded-3xl shadow border border-solid" x-show="showComment{{$child->id}}">
                                                 <input wire:model="komen" type="text" class="w-full focus:outline-none text-xs border-none" placeholder="Tambah Komentar">
                                                 <i wire:click="sendComment([{{$post->id}}, {{$comment->id}}, {{$child->id}}])" class="fa-solid fa-circle-chevron-right text-lg my-auto cursor-pointer"></i>
                                             </div>

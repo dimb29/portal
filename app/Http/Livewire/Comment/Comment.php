@@ -21,7 +21,7 @@ class Comment extends Component
         $comments = Comments::with(['child', 'like', 'author'])->where(['parent_id' => NULL, 'post_id' => $post->id])->get();
         if(Auth::user()){
             $authid = $this->authid = Auth::user()->id;
-            $authtype = $this->authtype = 'user';
+            $authtype = $this->authtype = Auth::user()->user_type;
             $mergekomen = [];
             $mergechild = [];
             foreach($comments as $key => $komen){
@@ -83,6 +83,10 @@ class Comment extends Component
         }else{
             return redirect('/login');
         }
+    }
+
+    public function deleteMyComment($data){
+        $delcoment = Comments::where('id', $data)->delete();
     }
 
     public function likeIt($data){
